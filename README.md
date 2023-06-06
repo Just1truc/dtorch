@@ -1,2 +1,2 @@
-# JTorch
+# DTorch
 The package
