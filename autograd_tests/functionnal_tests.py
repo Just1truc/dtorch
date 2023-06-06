@@ -1,6 +1,6 @@
 """ imports """
-import autograd.jtensors as jt
-import autograd.functionnal as F
+import dtorch.jtensors as jt
+import dtorch.functionnal as F
 import unittest
 import torch as t
 import numpy as np

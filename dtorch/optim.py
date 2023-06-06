@@ -1,7 +1,7 @@
 """ imports """
-from autograd.nn import Parameter
-import autograd.jtensors as jtensors
-import autograd.functionnal as fn
+from dtorch.nn import Parameter
+import dtorch.jtensors as jtensors
+import dtorch.functionnal as fn
 import numpy as np
 
 class OptimizerParam:

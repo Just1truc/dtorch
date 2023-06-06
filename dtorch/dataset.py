@@ -1,6 +1,6 @@
 """ imports """
-import autograd.jtensors as jtensors
-import autograd.functionnal as fn
+import dtorch.jtensors as jtensors
+import dtorch.functionnal as fn
 from typing import Tuple
 
 class Dataset:

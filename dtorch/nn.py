@@ -1,20 +1,20 @@
 """ imports """
 from typing import Any
-import autograd
+import dtorch
 import functools
 from math import sqrt
 import pickle
 
 class Parameter:
 
-    def __init__(self, tensor : autograd.jtensors.JTensors, name : str = "") -> None:
+    def __init__(self, tensor : dtorch.jtensors.JTensors, name : str = "") -> None:
         
-        self.__tensor : autograd.jtensors.JTensors = tensor
+        self.__tensor : dtorch.jtensors.JTensors = tensor
         self.__tensor.require_grads = True
         self.__tensor.add_name(name)
 
 
-    def get(self) -> autograd.jtensors.JTensors:
+    def get(self) -> dtorch.jtensors.JTensors:
         return self.__tensor
     
 
@@ -126,19 +126,19 @@ class Linear(Module):
 
         """ Parameters """
         stdv = 1. / sqrt(in_feats)
-        self.__weights : Parameter = Parameter(autograd.functionnal.uniform_(-stdv, stdv, out_feats * in_feats).reshape(out_feats, in_feats))
-        self.__biais : Parameter = Parameter(autograd.functionnal.uniform_(-stdv, stdv, out_feats).unsqueeze(0))
+        self.__weights : Parameter = Parameter(dtorch.functionnal.uniform_(-stdv, stdv, out_feats * in_feats).reshape(out_feats, in_feats))
+        self.__biais : Parameter = Parameter(dtorch.functionnal.uniform_(-stdv, stdv, out_feats).unsqueeze(0))
 
     
-    def __forward__(self, x : autograd.jtensors.JTensors) -> autograd.jtensors.JTensors:
+    def __forward__(self, x : dtorch.jtensors.JTensors) -> dtorch.jtensors.JTensors:
 
         assert (x is not None), "Invalid value passed as parameter"
         assert (x.shape() == (1, self.__in_feats) or x.shape() == (x.shape()[0], self.__in_feats)), "Invalid shape for input tensor. it may be :" + str((1, self.__in_feats)) + " or " + str((x.shape()[0], self.__in_feats)) + ", but got :" + str(x.shape())
 
-        return autograd.functionnal.matmul(x, self.__weights.get().transpose()) + self.__biais.get()
+        return dtorch.functionnal.matmul(x, self.__weights.get().transpose()) + self.__biais.get()
 
 
-    def __call__(self, x : autograd.jtensors.JTensors) -> autograd.jtensors.JTensors:
+    def __call__(self, x : dtorch.jtensors.JTensors) -> dtorch.jtensors.JTensors:
     
         return self.__forward__(x)
 
@@ -151,7 +151,7 @@ class Sequential(Module):
         self.modules : list[Module] = list(modules)
 
 
-    def __call__(self, x : autograd.jtensors.JTensors) -> autograd.jtensors.JTensors:
+    def __call__(self, x : dtorch.jtensors.JTensors) -> dtorch.jtensors.JTensors:
         return functools.reduce(lambda acc, layer : layer(acc), self.modules, x)
 
 
@@ -161,8 +161,8 @@ class SoftMax(Module):
         super().__init__()
 
     
-    def __call__(self, x : autograd.jtensors.JTensors) -> Any:
-        return autograd.functionnal.softmax(x)
+    def __call__(self, x : dtorch.jtensors.JTensors) -> Any:
+        return dtorch.functionnal.softmax(x)
 
 
 class Sigmoid(Module):
@@ -171,8 +171,8 @@ class Sigmoid(Module):
         super().__init__()
 
 
-    def __call__(self, x : autograd.jtensors.JTensors) -> Any:
-        return autograd.functionnal.sigmoid(x)
+    def __call__(self, x : dtorch.jtensors.JTensors) -> Any:
+        return dtorch.functionnal.sigmoid(x)
 
 
 class ReLU(Module):
@@ -181,8 +181,8 @@ class ReLU(Module):
         super().__init__()
 
 
-    def __call__(self, x : autograd.jtensors.JTensors) -> Any:
-        return autograd.functionnal.max(x, 0)
+    def __call__(self, x : dtorch.jtensors.JTensors) -> Any:
+        return dtorch.functionnal.max(x, 0)
 
 
 class Tanh(Module):
@@ -191,8 +191,8 @@ class Tanh(Module):
         super().__init__()
 
 
-    def __call__(self, x : autograd.jtensors.JTensors) -> Any:
-        return autograd.functionnal.tanh(x)
+    def __call__(self, x : dtorch.jtensors.JTensors) -> Any:
+        return dtorch.functionnal.tanh(x)
 
 
 class Dropout(Module):
@@ -205,8 +205,8 @@ class Dropout(Module):
         self.__p : float = p
 
 
-    def __call__(self, x : autograd.jtensors.JTensors) -> Any:
-        return autograd.functionnal.dropout(x, self.__p)
+    def __call__(self, x : dtorch.jtensors.JTensors) -> Any:
+        return dtorch.functionnal.dropout(x, self.__p)
 
 
 # TODO :
@@ -255,16 +255,16 @@ class RNN(Module):
         for i in range(self._num_layers):
 
             stdv = 1. / sqrt(hidden)
-            setattr(self, f'weight_ih_l{i}', Parameter(autograd.functionnal.uniform_(-stdv, stdv, hidden * input).reshape(input, hidden), f'weight_ih_l{i}'))
+            setattr(self, f'weight_ih_l{i}', Parameter(dtorch.functionnal.uniform_(-stdv, stdv, hidden * input).reshape(input, hidden), f'weight_ih_l{i}'))
             if bias:
-                setattr(self, f'bias_ih_l{i}', Parameter(autograd.functionnal.uniform_(-stdv, stdv, hidden).unsqueeze(0), f'bias_ih_l{i}'))
+                setattr(self, f'bias_ih_l{i}', Parameter(dtorch.functionnal.uniform_(-stdv, stdv, hidden).unsqueeze(0), f'bias_ih_l{i}'))
 
-            setattr(self, f'weight_hh_l{i}', Parameter(autograd.functionnal.uniform_(-stdv, stdv, hidden * hidden).reshape(hidden, hidden), f'weight_hh_l{i}'))
+            setattr(self, f'weight_hh_l{i}', Parameter(dtorch.functionnal.uniform_(-stdv, stdv, hidden * hidden).reshape(hidden, hidden), f'weight_hh_l{i}'))
             if bias:
-                setattr(self, f'bias_hh_l{i}', Parameter(autograd.functionnal.uniform_(-stdv, stdv, hidden).unsqueeze(0), f'bias_hh_l{i}'))
+                setattr(self, f'bias_hh_l{i}', Parameter(dtorch.functionnal.uniform_(-stdv, stdv, hidden).unsqueeze(0), f'bias_hh_l{i}'))
 
 
-    def __call__(self, x : autograd.jtensors.JTensors, hx : autograd.jtensors.JTensors = None) -> Any:
+    def __call__(self, x : dtorch.jtensors.JTensors, hx : dtorch.jtensors.JTensors = None) -> Any:
 
         assert (x is not None), "Invalid value passed as parameter"
         assert (len(x.shape()) == 3 or len(x.shape()) == 2), "Invalid shape for input tensor. tensor of shape (L,Hin)(L,Hin) for unbatched input, (L,N,Hin)(L,N,Hin) when batch_first=False or (N,L,Hin)(N,L,Hin) when batch_first=True"
@@ -277,28 +277,28 @@ class RNN(Module):
         if hx is None:
             if len(x.shape()) == 3:
                 shape = (self._num_layers, x.shape()[0], self._hidden_size) if self._batch_first else (self._num_layers, x.shape()[1], self._hidden_size)
-                hx = autograd.functionnal.zeros(*shape)
+                hx = dtorch.functionnal.zeros(*shape)
             else:
                 shape = (self._num_layers, self._hidden_size)
-                hx = autograd.functionnal.zeros(*shape)
+                hx = dtorch.functionnal.zeros(*shape)
 
         hx.require_grads = True
-        hx = autograd.functionnal.to_list(hx)
+        hx = dtorch.functionnal.to_list(hx)
 
-        output : list[autograd.jtensors.JTensors] = []
+        output : list[dtorch.jtensors.JTensors] = []
 
         if len(x.shape()) == 3 and self._batch_first:
-            x = autograd.einops.rearrange(x, 'N L H -> L N H')
+            x = dtorch.einops.rearrange(x, 'N L H -> L N H')
         if len(x.shape()) == 2:
             x = x.unsqueeze(1)
 
         seqlen = x.shape()[0]
 
         for seqi in range(seqlen):
-            y = autograd.jtensors.JTensors(x[seqi], require_grads=True)
+            y = dtorch.jtensors.JTensors(x[seqi], require_grads=True)
             for layer in range(self._num_layers):
-                y = autograd.functionnal.matmul(y, self.__getattribute__(f'weight_ih_l{layer}').get())
-                o = autograd.functionnal.matmul(hx[layer], self.__getattribute__(f'weight_hh_l{layer}').get())
+                y = dtorch.functionnal.matmul(y, self.__getattribute__(f'weight_ih_l{layer}').get())
+                o = dtorch.functionnal.matmul(hx[layer], self.__getattribute__(f'weight_hh_l{layer}').get())
                 #print(y)
                 #print(o)
                 if self._bias:
@@ -306,22 +306,22 @@ class RNN(Module):
                     o = o + self.__getattribute__(f'bias_hh_l{layer}').get()
                 #print(y)
                 # ht+1[layer] = yt[layer]
-                hx[layer] = autograd.functionnal.tanh(y + o)
+                hx[layer] = dtorch.functionnal.tanh(y + o)
                 #print(hx[layer])
                 if self._dropout > 0:
-                    hx[layer] = autograd.functionnal.dropout(hx[layer], self._dropout)
+                    hx[layer] = dtorch.functionnal.dropout(hx[layer], self._dropout)
                 y = hx[layer].clone()
             output.append(y)
         
         # return hidden state
-        output : autograd.jtensors.JTensors = autograd.functionnal.from_list(output)
+        output : dtorch.jtensors.JTensors = dtorch.functionnal.from_list(output)
         if len(x.shape()) == 3 and self._batch_first:
-            output = autograd.einops.rearrange(output, 'L N H -> N L H')
+            output = dtorch.einops.rearrange(output, 'L N H -> N L H')
             #print("output shape", output.shape())
             #print("output strides", output.stride())
             #print(output)
 
-        return output, autograd.functionnal.from_list(hx)
+        return output, dtorch.functionnal.from_list(hx)
 
 
     def __str__(self) -> str:

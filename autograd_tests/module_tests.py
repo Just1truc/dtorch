@@ -1,11 +1,11 @@
 """ imports """
 import unittest
-import autograd.nn as nn
-import autograd.jtensors as jt
+import dtorch.nn as nn
+import dtorch.jtensors as jt
 import torch as t
 import numpy as np
-import autograd.optim as optim
-import autograd.functionnal as fn
+import dtorch.optim as optim
+import dtorch.functionnal as fn
 
 class TestJModules(unittest.TestCase):
     

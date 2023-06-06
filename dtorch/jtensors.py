@@ -3,8 +3,8 @@ from typing import Tuple, Any
 
 import numpy as np
 
-import autograd.operations
-from autograd.derivatives import *
+import dtorch.operations
+from dtorch.derivatives import *
 
 """ Code """
 
@@ -23,9 +23,9 @@ class JTensors:
         else:
             self.__list : np.ndarray = array
 
-        self.__operation : autograd.operations.Operation = None
+        self.__operation : dtorch.operations.Operation = None
         if (require_grads):
-            self.__operation : autograd.operations.Operation = operation
+            self.__operation : dtorch.operations.Operation = operation
         self.require_grads : bool = require_grads
         self.grad : JTensors = None
         self.__name : str = None
@@ -74,7 +74,7 @@ class JTensors:
         return JTensors(
             self.__list - res if res is not None else self.__list,
             require_grads=require_grad,
-            operation=autograd.operations.CrossOperationBackward(sub_deriv, "SubJBackward", self, other)
+            operation=dtorch.operations.CrossOperationBackward(sub_deriv, "SubJBackward", self, other)
             if require_grad else None
         )
     
@@ -94,7 +94,7 @@ class JTensors:
         return JTensors(
             self.__list / res,
             require_grads=require_grad,
-            operation=autograd.operations.CrossOperationBackward(div_deriv, "DivJBackward", self, other)
+            operation=dtorch.operations.CrossOperationBackward(div_deriv, "DivJBackward", self, other)
             if require_grad else None
         )
     
@@ -115,7 +115,7 @@ class JTensors:
         return JTensors(
             self.__list * res,
             require_grads=require_grad,
-            operation=autograd.operations.CrossOperationBackward(mul_deriv, "MulJBackward", self, other)
+            operation=dtorch.operations.CrossOperationBackward(mul_deriv, "MulJBackward", self, other)
             if require_grad else None
         )
     
@@ -134,7 +134,7 @@ class JTensors:
         return JTensors(
             self.__list + res if res is not None else self.__list,
             require_grads=require_grad,
-            operation=autograd.operations.CrossOperationBackward(add_deriv, "AddJBackward", self, other)
+            operation=dtorch.operations.CrossOperationBackward(add_deriv, "AddJBackward", self, other)
             if require_grad else None
         )
     
@@ -152,7 +152,7 @@ class JTensors:
         return JTensors(
             res - self.__list if res is not None else -self.__list,
             require_grads=require_grad,
-            operation=autograd.operations.CrossOperationBackward(sub_deriv, "SubJBackward", other, self)
+            operation=dtorch.operations.CrossOperationBackward(sub_deriv, "SubJBackward", other, self)
             if require_grad else None
         )
     
@@ -171,7 +171,7 @@ class JTensors:
         return JTensors(
             res / self.__list,
             require_grads=require_grad,
-            operation=autograd.operations.CrossOperationBackward(div_deriv, "DivJBackward", other, self)
+            operation=dtorch.operations.CrossOperationBackward(div_deriv, "DivJBackward", other, self)
             if require_grad else None
         )
     
@@ -215,7 +215,7 @@ class JTensors:
         return JTensors(
             np.power(self.__list, factor),
             require_grads=self.require_grads,
-            operation=autograd.operations.CrossOperationBackward(pow_deriv, "PowJBackward", self, factor)
+            operation=dtorch.operations.CrossOperationBackward(pow_deriv, "PowJBackward", self, factor)
             if self.require_grads else None
         )
 
@@ -265,14 +265,14 @@ class JTensors:
     
     def transpose(self) -> Any:
 
-        return autograd.functionnal.transpose(self)
+        return dtorch.functionnal.transpose(self)
     
 
     def reshape(self, *shape) -> Any:
         """reshape the tensor
         """
 
-        return autograd.functionnal.reshape(self, shape)
+        return dtorch.functionnal.reshape(self, shape)
     
 
     def stride(self) -> Tuple[int]:
@@ -313,7 +313,7 @@ class JTensors:
         return JTensors(
             [self.__list.max()],
             require_grads=self.require_grads,
-            operation=autograd.operations.CrossOperationBackward(
+            operation=dtorch.operations.CrossOperationBackward(
                 real_max_deriv,
                 "MaxJBackward1",
                 self
@@ -335,7 +335,7 @@ class JTensors:
             JTensors: a tensor with the norm
         """
 
-        return autograd.functionnal.norm(self)
+        return dtorch.functionnal.norm(self)
     
 
     def detach(self) -> Any:
@@ -371,7 +371,7 @@ class JTensors:
             jensor: jtensors with a new dimension
         """
 
-        return autograd.functionnal.unsqueeze(self, dim)
+        return dtorch.functionnal.unsqueeze(self, dim)
 
 
     def squeeze(self, dim : int):
@@ -382,4 +382,4 @@ class JTensors:
             jensor: jtensors with a removed dimension
         """
 
-        return autograd.functionnal.squeeze(self, dim)
+        return dtorch.functionnal.squeeze(self, dim)

@@ -1,5 +1,5 @@
 """ imports """
-import autograd.jtensors as jt
+import dtorch.jtensors as jt
 import unittest
 import torch as t
 import numpy as np
