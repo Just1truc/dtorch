@@ -1,0 +1,3 @@
+python3 -m unittest autograd_tests/jtensors_tests.py -v
+python3 -m unittest autograd_tests/functionnal_tests.py -v
+python3 -m unittest autograd_tests/module_tests.py -v
