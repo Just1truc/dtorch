@@ -123,7 +123,7 @@ a= 0
 epochs = 1
 for i in range(epochs):
     optimizer.zero_grad()
-    m, prout = model.forward(x_train_tensor)
+    m, prout = model(x_train_tensor)
     #print("m", m)
 
     optimizer_torch.zero_grad()
