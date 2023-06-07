@@ -62,6 +62,14 @@ class Module:
 
     """ public """
 
+    def forward(self):
+        pass
+
+
+    def __call__(self, *args: Any, **kwds: Any) -> Any:
+        return self.forward(*args, **kwds)
+
+
     def parameters(self):
         return self._parameters
     
@@ -130,17 +138,12 @@ class Linear(Module):
         self.__biais : Parameter = Parameter(dtorch.functionnal.uniform_(-stdv, stdv, out_feats).unsqueeze(0))
 
     
-    def __forward__(self, x : dtorch.jtensors.JTensors) -> dtorch.jtensors.JTensors:
+    def forward(self, x : dtorch.jtensors.JTensors) -> dtorch.jtensors.JTensors:
 
         assert (x is not None), "Invalid value passed as parameter"
         assert (x.shape == (1, self.__in_feats) or x.shape == (x.shape[0], self.__in_feats)), "Invalid shape for input tensor. it may be :" + str((1, self.__in_feats)) + " or " + str((x.shape[0], self.__in_feats)) + ", but got :" + str(x.shape)
 
         return dtorch.functionnal.matmul(x, self.__weights.get().transpose()) + self.__biais.get()
-
-
-    def __call__(self, x : dtorch.jtensors.JTensors) -> dtorch.jtensors.JTensors:
-    
-        return self.__forward__(x)
 
 
 class Sequential(Module):
@@ -151,7 +154,7 @@ class Sequential(Module):
         self.modules : list[Module] = list(modules)
 
 
-    def __call__(self, x : dtorch.jtensors.JTensors) -> dtorch.jtensors.JTensors:
+    def forward(self, x : dtorch.jtensors.JTensors) -> dtorch.jtensors.JTensors:
         return functools.reduce(lambda acc, layer : layer(acc), self.modules, x)
 
 
@@ -161,7 +164,7 @@ class SoftMax(Module):
         super().__init__()
 
     
-    def __call__(self, x : dtorch.jtensors.JTensors) -> Any:
+    def forward(self, x : dtorch.jtensors.JTensors) -> Any:
         return dtorch.functionnal.softmax(x)
 
 
@@ -171,7 +174,7 @@ class Sigmoid(Module):
         super().__init__()
 
 
-    def __call__(self, x : dtorch.jtensors.JTensors) -> Any:
+    def forward(self, x : dtorch.jtensors.JTensors) -> Any:
         return dtorch.functionnal.sigmoid(x)
 
 
@@ -181,7 +184,7 @@ class ReLU(Module):
         super().__init__()
 
 
-    def __call__(self, x : dtorch.jtensors.JTensors) -> Any:
+    def forward(self, x : dtorch.jtensors.JTensors) -> Any:
         return dtorch.functionnal.max(x, 0)
 
 
@@ -191,7 +194,7 @@ class Tanh(Module):
         super().__init__()
 
 
-    def __call__(self, x : dtorch.jtensors.JTensors) -> Any:
+    def forward(self, x : dtorch.jtensors.JTensors) -> Any:
         return dtorch.functionnal.tanh(x)
 
 
@@ -205,7 +208,7 @@ class Dropout(Module):
         self.__p : float = p
 
 
-    def __call__(self, x : dtorch.jtensors.JTensors) -> Any:
+    def forward(self, x : dtorch.jtensors.JTensors) -> Any:
         return dtorch.functionnal.dropout(x, self.__p)
 
 
@@ -264,7 +267,7 @@ class RNN(Module):
                 setattr(self, f'bias_hh_l{i}', Parameter(dtorch.functionnal.uniform_(-stdv, stdv, hidden).unsqueeze(0), f'bias_hh_l{i}'))
 
 
-    def __call__(self, x : dtorch.jtensors.JTensors, hx : dtorch.jtensors.JTensors = None) -> Any:
+    def forward(self, x : dtorch.jtensors.JTensors, hx : dtorch.jtensors.JTensors = None) -> Any:
 
         assert (x is not None), "Invalid value passed as parameter"
         assert (len(x.shape) == 3 or len(x.shape) == 2), "Invalid shape for input tensor. tensor of shape (L,Hin)(L,Hin) for unbatched input, (L,N,Hin)(L,N,Hin) when batch_first=False or (N,L,Hin)(N,L,Hin) when batch_first=True"
