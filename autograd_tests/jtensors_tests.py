@@ -12,13 +12,13 @@ class TestJTensors(unittest.TestCase):
 
         # test creation of jtensor
         tensor = jt.JTensors([1, 2, 3, 4])
-        self.assertEqual(tensor.shape(), (4,))
+        self.assertEqual(tensor.shape, (4,))
         self.assertEqual(tensor.require_grads, False)
         self.assertEqual(tensor.grad, None)
 
         # test creation of jtensor with require_grads
         tensor = jt.JTensors([1, 2, 3, 4], require_grads=True)
-        self.assertEqual(tensor.shape(), (4,))
+        self.assertEqual(tensor.shape, (4,))
         self.assertEqual(tensor.require_grads, True)
         self.assertEqual(tensor.grad, None)
 
@@ -31,7 +31,7 @@ class TestJTensors(unittest.TestCase):
         tensor1 = jt.JTensors([1, 2, 3, 4])
         tensor2 = jt.JTensors([1, 2, 3, 4])
         tensor3 = tensor1 + tensor2
-        self.assertEqual(tensor3.shape(), (4,))
+        self.assertEqual(tensor3.shape, (4,))
         self.assertEqual(tensor3.require_grads, False)
         self.assertEqual(tensor3.grad, None)
         self.assertEqual((tensor3() == np.array([2, 4, 6, 8])).all(), True)
@@ -40,7 +40,7 @@ class TestJTensors(unittest.TestCase):
         tensor1 = jt.JTensors([[1, 2], [3, 4]])
         tensor2 = jt.JTensors([[1, 2], [3, 4]])
         tensor3 = tensor1 + tensor2
-        self.assertEqual(tensor3.shape(), (2, 2))
+        self.assertEqual(tensor3.shape, (2, 2))
         self.assertEqual(tensor3.require_grads, False)
         self.assertEqual(tensor3.grad, None)
         self.assertEqual((tensor3() == np.array([[2, 4], [6, 8]])).all(), True)
@@ -49,7 +49,7 @@ class TestJTensors(unittest.TestCase):
         tensor1 = jt.JTensors([3], require_grads=True)
         tensor2 = jt.JTensors([2])
         tensor3 = tensor1 + tensor2
-        self.assertEqual(tensor3.shape(), (1,))
+        self.assertEqual(tensor3.shape, (1,))
         self.assertEqual(tensor3.require_grads, True)
         self.assertEqual(tensor3.grad, None)
         tensor3.backward()
@@ -74,7 +74,7 @@ class TestJTensors(unittest.TestCase):
         tensor1 = jt.JTensors([1, 2, 3, 4])
         tensor2 = jt.JTensors([1, 2, 3, 4])
         tensor3 = tensor1 - tensor2
-        self.assertEqual(tensor3.shape(), (4,))
+        self.assertEqual(tensor3.shape, (4,))
         self.assertEqual(tensor3.require_grads, False)
         self.assertEqual(tensor3.grad, None)
         self.assertEqual((tensor3() == np.array([0, 0, 0, 0])).all(), True)
@@ -83,7 +83,7 @@ class TestJTensors(unittest.TestCase):
         tensor1 = jt.JTensors([[1, 2], [3, 4]])
         tensor2 = jt.JTensors([[1, 2], [3, 4]])
         tensor3 = tensor1 - tensor2
-        self.assertEqual(tensor3.shape(), (2, 2))
+        self.assertEqual(tensor3.shape, (2, 2))
         self.assertEqual(tensor3.require_grads, False)
         self.assertEqual(tensor3.grad, None)
         self.assertEqual((tensor3() == np.array([[0, 0], [0, 0]])).all(), True)
@@ -92,7 +92,7 @@ class TestJTensors(unittest.TestCase):
         tensor1 = jt.JTensors([3], require_grads=True)
         tensor2 = jt.JTensors([2])
         tensor3 = tensor1 - tensor2
-        self.assertEqual(tensor3.shape(), (1,))
+        self.assertEqual(tensor3.shape, (1,))
         self.assertEqual(tensor3.require_grads, True)
         self.assertEqual(tensor3.grad, None)
         tensor3.backward()
@@ -117,7 +117,7 @@ class TestJTensors(unittest.TestCase):
         tensor1 = jt.JTensors([1, 2, 3, 4])
         tensor2 = jt.JTensors([1, 2, 3, 4])
         tensor3 = tensor1 * tensor2
-        self.assertEqual(tensor3.shape(), (4,))
+        self.assertEqual(tensor3.shape, (4,))
         self.assertEqual(tensor3.require_grads, False)
         self.assertEqual(tensor3.grad, None)
         self.assertEqual((tensor3() == np.array([1, 4, 9, 16])).all(), True)
@@ -126,7 +126,7 @@ class TestJTensors(unittest.TestCase):
         tensor1 = jt.JTensors([[1, 2], [3, 4]])
         tensor2 = jt.JTensors([[1, 2], [3, 4]])
         tensor3 = tensor1 * tensor2
-        self.assertEqual(tensor3.shape(), (2, 2))
+        self.assertEqual(tensor3.shape, (2, 2))
         self.assertEqual(tensor3.require_grads, False)
         self.assertEqual(tensor3.grad, None)
         self.assertEqual((tensor3() == np.array([[1, 4], [9, 16]])).all(), True)
@@ -135,7 +135,7 @@ class TestJTensors(unittest.TestCase):
         tensor1 = jt.JTensors([3], require_grads=True)
         tensor2 = jt.JTensors([2])
         tensor3 = tensor1 * tensor2
-        self.assertEqual(tensor3.shape(), (1,))
+        self.assertEqual(tensor3.shape, (1,))
         self.assertEqual(tensor3.require_grads, True)
         self.assertEqual(tensor3.grad, None)
         tensor3.backward()
@@ -157,7 +157,7 @@ class TestJTensors(unittest.TestCase):
         tensor1 = jt.JTensors([1, 2, 3, 4])
         tensor2 = jt.JTensors([1, 2, 3, 4])
         tensor3 = tensor1 / tensor2
-        self.assertEqual(tensor3.shape(), (4,))
+        self.assertEqual(tensor3.shape, (4,))
         self.assertEqual(tensor3.require_grads, False)
         self.assertEqual(tensor3.grad, None)
         self.assertEqual((tensor3() == np.array([1, 1, 1, 1])).all(), True)
@@ -166,7 +166,7 @@ class TestJTensors(unittest.TestCase):
         tensor1 = jt.JTensors([[1, 2], [3, 4]])
         tensor2 = jt.JTensors([[1, 2], [3, 4]])
         tensor3 = tensor1 / tensor2
-        self.assertEqual(tensor3.shape(), (2, 2))
+        self.assertEqual(tensor3.shape, (2, 2))
         self.assertEqual(tensor3.require_grads, False)
         self.assertEqual(tensor3.grad, None)
         self.assertEqual((tensor3() == np.array([[1, 1], [1, 1]])).all(), True)
@@ -175,7 +175,7 @@ class TestJTensors(unittest.TestCase):
         tensor1 = jt.JTensors([3], require_grads=True)
         tensor2 = jt.JTensors([2])
         tensor3 = tensor1 / tensor2
-        self.assertEqual(tensor3.shape(), (1,))
+        self.assertEqual(tensor3.shape, (1,))
         self.assertEqual(tensor3.require_grads, True)
         self.assertEqual(tensor3.grad, None)
         tensor3.backward()
@@ -199,7 +199,7 @@ class TestJTensors(unittest.TestCase):
         # test power of jtensor
         tensor1 = jt.JTensors([1, 2, 3, 4])
         tensor3 = tensor1 ** 2
-        self.assertEqual(tensor3.shape(), (4,))
+        self.assertEqual(tensor3.shape, (4,))
         self.assertEqual(tensor3.require_grads, False)
         self.assertEqual(tensor3.grad, None)
         self.assertEqual((tensor3() == np.array([1, 4, 9, 16])).all(), True)
@@ -207,7 +207,7 @@ class TestJTensors(unittest.TestCase):
         # test power of jtensor with shape
         tensor1 = jt.JTensors([[1, 2], [3, 4]])
         tensor3 = tensor1 ** 2
-        self.assertEqual(tensor3.shape(), (2, 2))
+        self.assertEqual(tensor3.shape, (2, 2))
         self.assertEqual(tensor3.require_grads, False)
         self.assertEqual(tensor3.grad, None)
         self.assertEqual((tensor3() == np.array([[1, 4], [9, 16]])).all(), True)
@@ -215,7 +215,7 @@ class TestJTensors(unittest.TestCase):
         # test power of jtensor with shape and dtype
         tensor1 = jt.JTensors([3], require_grads=True)
         tensor3 = tensor1 ** 2
-        self.assertEqual(tensor3.shape(), (1,))
+        self.assertEqual(tensor3.shape, (1,))
         self.assertEqual(tensor3.require_grads, True)
         self.assertEqual(tensor3.grad, None)
         tensor3.backward()
@@ -237,7 +237,7 @@ class TestJTensors(unittest.TestCase):
         # test unsqueeze of jtensor
         tensor1 = jt.JTensors([1, 2, 3, 4])
         tensor3 = tensor1.unsqueeze(0)
-        self.assertEqual(tensor3.shape(), (1, 4))
+        self.assertEqual(tensor3.shape, (1, 4))
         self.assertEqual(tensor3.require_grads, False)
         self.assertEqual(tensor3.grad, None)
         self.assertEqual((tensor3() == np.array([[1, 2, 3, 4]])).all(), True)
@@ -245,7 +245,7 @@ class TestJTensors(unittest.TestCase):
         # test unsqueeze of jtensor with shape
         tensor1 = jt.JTensors([[1, 2], [3, 4]])
         tensor3 = tensor1.unsqueeze(0)
-        self.assertEqual(tensor3.shape(), (1, 2, 2))
+        self.assertEqual(tensor3.shape, (1, 2, 2))
         self.assertEqual(tensor3.require_grads, False)
         self.assertEqual(tensor3.grad, None)
         self.assertEqual((tensor3() == np.array([[[1, 2], [3, 4]]])).all(), True)
@@ -258,7 +258,7 @@ class TestJTensors(unittest.TestCase):
 
         tensor1 = jt.JTensors([3], require_grads=True)
         tensor3 = tensor1.unsqueeze(0)
-        self.assertEqual(tensor3.shape(), (1, 1))
+        self.assertEqual(tensor3.shape, (1, 1))
         self.assertEqual(tensor3.require_grads, True)
         self.assertEqual(tensor3.grad, None)
         tensor3 = tensor3.squeeze(0)

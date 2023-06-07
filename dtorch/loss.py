@@ -29,13 +29,13 @@ class MSELoss:
 
     def __call__(self, outputs : dtorch.jtensors.JTensors, target : dtorch.jtensors.JTensors) -> dtorch.jtensors.JTensors:
 
-        assert (outputs.shape() == target.shape())
+        assert (outputs.shape == target.shape)
 
-        #print("mse:", outputs.shape(), outputs.stride())
-        #print(((target - outputs) ** 2).stride())
+        #print("mse:", outputs.shape, outputs.stride)
+        #print(((target - outputs) ** 2).stride)
         res : dtorch.jtensors.JTensors = dtorch.functionnal.sum((target - outputs) ** 2)
         if (self.__reduction == 'mean'):
-            scl_nb = np.prod(outputs.shape())
+            scl_nb = np.prod(outputs.shape)
             return res / int(scl_nb)
         return res
     

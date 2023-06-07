@@ -133,7 +133,7 @@ class Linear(Module):
     def __forward__(self, x : dtorch.jtensors.JTensors) -> dtorch.jtensors.JTensors:
 
         assert (x is not None), "Invalid value passed as parameter"
-        assert (x.shape() == (1, self.__in_feats) or x.shape() == (x.shape()[0], self.__in_feats)), "Invalid shape for input tensor. it may be :" + str((1, self.__in_feats)) + " or " + str((x.shape()[0], self.__in_feats)) + ", but got :" + str(x.shape())
+        assert (x.shape == (1, self.__in_feats) or x.shape == (x.shape[0], self.__in_feats)), "Invalid shape for input tensor. it may be :" + str((1, self.__in_feats)) + " or " + str((x.shape[0], self.__in_feats)) + ", but got :" + str(x.shape)
 
         return dtorch.functionnal.matmul(x, self.__weights.get().transpose()) + self.__biais.get()
 
@@ -267,16 +267,16 @@ class RNN(Module):
     def __call__(self, x : dtorch.jtensors.JTensors, hx : dtorch.jtensors.JTensors = None) -> Any:
 
         assert (x is not None), "Invalid value passed as parameter"
-        assert (len(x.shape()) == 3 or len(x.shape()) == 2), "Invalid shape for input tensor. tensor of shape (L,Hin)(L,Hin) for unbatched input, (L,N,Hin)(L,N,Hin) when batch_first=False or (N,L,Hin)(N,L,Hin) when batch_first=True"
-        assert (x.shape()[-1] == self._input_size), "Invalid shape for input tensor. tensor of shape (L,Hin)(L,Hin) for unbatched input, (L,N,Hin)(L,N,Hin) when batch_first=False or (N,L,Hin)(N,L,Hin) when batch_first=True"
-        assert (hx is None or (len(hx.shape()) == 2 and hx.shape()[0] == self._num_layers and hx.shape()[1] == self._hidden_size) or (len(hx.shape()) == 3 and hx.shape()[0] == self._num_layers and hx.shape()[1] == x.shape()[0] and hx.shape()[2] == self._hidden_size)), "Invalid shape for hidden"
+        assert (len(x.shape) == 3 or len(x.shape) == 2), "Invalid shape for input tensor. tensor of shape (L,Hin)(L,Hin) for unbatched input, (L,N,Hin)(L,N,Hin) when batch_first=False or (N,L,Hin)(N,L,Hin) when batch_first=True"
+        assert (x.shape[-1] == self._input_size), "Invalid shape for input tensor. tensor of shape (L,Hin)(L,Hin) for unbatched input, (L,N,Hin)(L,N,Hin) when batch_first=False or (N,L,Hin)(N,L,Hin) when batch_first=True"
+        assert (hx is None or (len(hx.shape) == 2 and hx.shape[0] == self._num_layers and hx.shape[1] == self._hidden_size) or (len(hx.shape) == 3 and hx.shape[0] == self._num_layers and hx.shape[1] == x.shape[0] and hx.shape[2] == self._hidden_size)), "Invalid shape for hidden"
 
         # multiply each element of the sequence one by one with the weights
 
         # init hidden states
         if hx is None:
-            if len(x.shape()) == 3:
-                shape = (self._num_layers, x.shape()[0], self._hidden_size) if self._batch_first else (self._num_layers, x.shape()[1], self._hidden_size)
+            if len(x.shape) == 3:
+                shape = (self._num_layers, x.shape[0], self._hidden_size) if self._batch_first else (self._num_layers, x.shape[1], self._hidden_size)
                 hx = dtorch.functionnal.zeros(*shape)
             else:
                 shape = (self._num_layers, self._hidden_size)
@@ -287,12 +287,12 @@ class RNN(Module):
 
         output : list[dtorch.jtensors.JTensors] = []
 
-        if len(x.shape()) == 3 and self._batch_first:
+        if len(x.shape) == 3 and self._batch_first:
             x = dtorch.einops.rearrange(x, 'N L H -> L N H')
-        if len(x.shape()) == 2:
+        if len(x.shape) == 2:
             x = x.unsqueeze(1)
 
-        seqlen = x.shape()[0]
+        seqlen = x.shape[0]
 
         for seqi in range(seqlen):
             y = dtorch.jtensors.JTensors(x[seqi], require_grads=True)
@@ -315,10 +315,10 @@ class RNN(Module):
         
         # return hidden state
         output : dtorch.jtensors.JTensors = dtorch.functionnal.from_list(output)
-        if len(x.shape()) == 3 and self._batch_first:
+        if len(x.shape) == 3 and self._batch_first:
             output = dtorch.einops.rearrange(output, 'L N H -> N L H')
-            #print("output shape", output.shape())
-            #print("output strides", output.stride())
+            #print("output shape", output.shape)
+            #print("output strides", output.stride)
             #print(output)
 
         return output, dtorch.functionnal.from_list(hx)

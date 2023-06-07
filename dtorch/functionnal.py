@@ -108,7 +108,7 @@ def dropout(tensor : dtorch.jtensors.JTensors, p : float = 0.5):
 
     assert (isinstance(tensor, dtorch.jtensors.JTensors)), "Tensor arg must be a JTensor"
 
-    mask = np.random.rand(*tensor.shape()) < p
+    mask = np.random.rand(*tensor) < p
     return dtorch.jtensors.JTensors(
         np.where(mask, 0, tensor()),
         require_grads=tensor.require_grads,
@@ -188,7 +188,7 @@ def log(tensor : dtorch.jtensors.JTensors):
 def matmul(left : dtorch.jtensors.JTensors, right : dtorch.jtensors.JTensors):
 
     assert (isinstance(left, dtorch.jtensors.JTensors) and isinstance(right, dtorch.jtensors.JTensors)), "Invalid operand type for matmul"
-    assert (left.shape()[-1] == right.shape()[0]), "Invalid shapes for matrices math multiplication. Shapes: " + str(left.shape()) + ", " + str(right.shape())
+    assert (left.shape[-1] == right.shape[0]), "Invalid shapes for matrices math multiplication. Shapes: " + str(left.shape) + ", " + str(right.shape)
 
     require_grad : bool = (left.require_grads or right.require_grads)
     
@@ -245,8 +245,8 @@ def unsqueeze(tensor : dtorch.jtensors.JTensors, axis : int):
 
 def reshape(tensor : dtorch.jtensors.JTensors, shape : Tuple[int]):
 
-    #print("reshape shape", tensor.shape())
-    #print("reshape stride", tensor.stride())
+    #print("reshape shape", tensor.shape)
+    #print("reshape stride", tensor.stride)
     #print("reshape shape after", tensor().reshape(shape).shape)
     #print("reshape stride after", tensor().reshape(shape).strides)
     return dtorch.jtensors.JTensors(
@@ -255,7 +255,7 @@ def reshape(tensor : dtorch.jtensors.JTensors, shape : Tuple[int]):
         operation=dtorch.operations.CrossOperationBackward(
             reshape_backward,
             "ReshapeJBackward",
-            tensor, tensor.shape()
+            tensor, tensor.shape
         )
     )
 

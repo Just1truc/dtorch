@@ -130,7 +130,7 @@ def sum_deriv(base_tensor, *tensors):
     from_tensor : dtorch.jtensors.JTensors = tensors[0]
 
     if (from_tensor.require_grads):
-        tensor = dtorch.jtensors.JTensors(np.lib.stride_tricks.as_strided(np.ones(from_tensor.shape()), shape=from_tensor.shape(), strides=from_tensor.stride()))
+        tensor = dtorch.jtensors.JTensors(np.lib.stride_tricks.as_strided(np.ones(from_tensor.shape), shape=from_tensor.shape, strides=from_tensor.stride))
         if (from_tensor.isLeaf()):
             from_tensor.grad += dtorch.jtensors.JTensors(base_tensor() * tensor())
         else:
@@ -226,7 +226,7 @@ def to_list_deriv(base_tensor, *tensors):
 
     if (tensor.require_grads):
         if (tensor.grad is None):
-            tensor.grad = dtorch.jtensors.JTensors(np.zeros(tensor.shape()))
+            tensor.grad = dtorch.jtensors.JTensors(np.zeros(tensor.shape))
         if (tensor.isLeaf()):
             tensor.grad[index] += base_tensor()
         else:
@@ -264,13 +264,13 @@ def add_deriv(base_tensor, *tensors):
 
     unpacked_tensors : list[dtorch.jtensors.JTensors] = list(tensors)
     is_tensor : bool = isinstance(unpacked_tensors[1], dtorch.jtensors.JTensors)
-    left_size : int = len(list(filter(lambda x : x > 1, unpacked_tensors[0].shape())))
-    right_size : int = len(list(filter(lambda x : x > 1, unpacked_tensors[1].shape())))
+    left_size : int = len(list(filter(lambda x : x > 1, unpacked_tensors[0].shape)))
+    right_size : int = len(list(filter(lambda x : x > 1, unpacked_tensors[1].shape)))
 
     if (unpacked_tensors[0].require_grads):
-        grad = dtorch.jtensors.JTensors(np.sum(base_tensor(), axis=dimensionToSum(unpacked_tensors[1].shape(), unpacked_tensors[0].shape())).reshape(*unpacked_tensors[0].shape())
+        grad = dtorch.jtensors.JTensors(np.sum(base_tensor(), axis=dimensionToSum(unpacked_tensors[1].shape, unpacked_tensors[0].shape)).reshape(*unpacked_tensors[0].shape)
                                                                 if left_size < right_size
-                                                                else base_tensor.numpy().reshape(*unpacked_tensors[0].shape()))
+                                                                else base_tensor.numpy().reshape(*unpacked_tensors[0].shape))
         if (unpacked_tensors[0].isLeaf()):
             unpacked_tensors[0].grad += grad
         else:
@@ -278,9 +278,9 @@ def add_deriv(base_tensor, *tensors):
         unpacked_tensors[0].backward(unpacked_tensors[0].grad, forced = True)
 
     if (is_tensor and unpacked_tensors[1].require_grads):
-        grad = dtorch.jtensors.JTensors(np.sum(base_tensor(), axis=dimensionToSum(unpacked_tensors[0].shape(), unpacked_tensors[1].shape())).reshape(*unpacked_tensors[1].shape())
+        grad = dtorch.jtensors.JTensors(np.sum(base_tensor(), axis=dimensionToSum(unpacked_tensors[0].shape, unpacked_tensors[1].shape)).reshape(*unpacked_tensors[1].shape)
                                                                if right_size < left_size
-                                                               else base_tensor.numpy().reshape(*unpacked_tensors[1].shape()))
+                                                               else base_tensor.numpy().reshape(*unpacked_tensors[1].shape))
         if (unpacked_tensors[1].isLeaf()):
             unpacked_tensors[1].grad += grad
         else:
@@ -317,13 +317,13 @@ def sub_deriv(base_tensor, *tensors):
 
     unpacked_tensors : list[dtorch.jtensors.JTensors] = list(tensors)
     is_tensor : bool = isinstance(unpacked_tensors[1], dtorch.jtensors.JTensors)
-    left_size : int = len(list(filter(lambda x : x > 1, unpacked_tensors[0].shape())))
-    right_size : int = len(list(filter(lambda x : x > 1, unpacked_tensors[1].shape())))
+    left_size : int = len(list(filter(lambda x : x > 1, unpacked_tensors[0].shape)))
+    right_size : int = len(list(filter(lambda x : x > 1, unpacked_tensors[1].shape)))
 
     if (unpacked_tensors[0].require_grads):
-        grad = dtorch.jtensors.JTensors(np.sum(base_tensor(), axis=dimensionToSum(unpacked_tensors[1].shape(), unpacked_tensors[0].shape())).reshape(*unpacked_tensors[0].shape())
+        grad = dtorch.jtensors.JTensors(np.sum(base_tensor(), axis=dimensionToSum(unpacked_tensors[1].shape, unpacked_tensors[0].shape)).reshape(*unpacked_tensors[0].shape)
                                                                 if left_size < right_size
-                                                                else base_tensor.numpy().reshape(*unpacked_tensors[0].shape()))
+                                                                else base_tensor.numpy().reshape(*unpacked_tensors[0].shape))
         if (unpacked_tensors[0].isLeaf()):
             unpacked_tensors[0].grad += grad
         else:
@@ -332,9 +332,9 @@ def sub_deriv(base_tensor, *tensors):
         unpacked_tensors[0].backward(unpacked_tensors[0].grad, forced = True)
 
     if (is_tensor and unpacked_tensors[1].require_grads):
-        grad = dtorch.jtensors.JTensors(-1 * (np.sum(base_tensor(), axis=dimensionToSum(unpacked_tensors[0].shape(), unpacked_tensors[1].shape())).reshape(*unpacked_tensors[1].shape())
+        grad = dtorch.jtensors.JTensors(-1 * (np.sum(base_tensor(), axis=dimensionToSum(unpacked_tensors[0].shape, unpacked_tensors[1].shape)).reshape(*unpacked_tensors[1].shape)
                                                                if right_size < left_size
-                                                               else base_tensor.numpy().reshape(*unpacked_tensors[1].shape())))
+                                                               else base_tensor.numpy().reshape(*unpacked_tensors[1].shape)))
         if (unpacked_tensors[1].isLeaf()):
             unpacked_tensors[1].grad += grad
         else:

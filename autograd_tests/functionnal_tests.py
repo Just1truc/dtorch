@@ -15,7 +15,7 @@ class TestFunctionnal(unittest.TestCase):
         # test sum of jtensor
         tensor1 = jt.JTensors([1, 2, 3, 4])
         tensor2 = F.sum(tensor1)
-        self.assertEqual(tensor2.shape(), (1,))
+        self.assertEqual(tensor2.shape, (1,))
         self.assertEqual(tensor2.require_grads, False)
         self.assertEqual(tensor2.grad, None)
         self.assertEqual(tensor2() == np.array([10]), True)
@@ -23,7 +23,7 @@ class TestFunctionnal(unittest.TestCase):
         # test sum of jtensor with shape
         tensor1 = jt.JTensors([[1, 2], [3, 4]])
         tensor2 = F.sum(tensor1)
-        self.assertEqual(tensor2.shape(), (1,))
+        self.assertEqual(tensor2.shape, (1,))
         self.assertEqual(tensor2.require_grads, False)
         self.assertEqual(tensor2.grad, None)
         self.assertEqual(tensor2() == np.array([10]), True)
@@ -31,7 +31,7 @@ class TestFunctionnal(unittest.TestCase):
         # test sum of jtensor with shape and dtype
         tensor1 = jt.JTensors([3, 5, 3, 56, 9], require_grads=True)
         tensor2 = F.sum(tensor1)
-        self.assertEqual(tensor2.shape(), (1,))
+        self.assertEqual(tensor2.shape, (1,))
         self.assertEqual(tensor2.require_grads, True)
         self.assertEqual(tensor2.grad, None)
         tensor2.backward()
@@ -51,7 +51,7 @@ class TestFunctionnal(unittest.TestCase):
         # test log of jtensor
         tensor1 = jt.JTensors([1, 2, 3, 4])
         tensor2 = F.log(tensor1)
-        self.assertEqual(tensor2.shape(), (4,))
+        self.assertEqual(tensor2.shape, (4,))
         self.assertEqual(tensor2.require_grads, False)
         self.assertEqual(tensor2.grad, None)
         self.assertEqual((tensor2() == np.array([0, np.log(2), np.log(3), np.log(4)])).all(), True)
@@ -59,7 +59,7 @@ class TestFunctionnal(unittest.TestCase):
         # test log of jtensor with shape
         tensor1 = jt.JTensors([[1, 2], [3, 4]])
         tensor2 = F.log(tensor1)
-        self.assertEqual(tensor2.shape(), (2, 2))
+        self.assertEqual(tensor2.shape, (2, 2))
         self.assertEqual(tensor2.require_grads, False)
         self.assertEqual(tensor2.grad, None)
         self.assertEqual((tensor2() == np.array([[0, np.log(2)], [np.log(3), np.log(4)]])).all(), True)
@@ -67,7 +67,7 @@ class TestFunctionnal(unittest.TestCase):
         # test log of jtensor with shape and dtype
         tensor1 = jt.JTensors([3, 4, 6, 89, 2], require_grads=True)
         tensor2 = F.sum(F.log(tensor1))
-        self.assertEqual(tensor2.shape(), (1,))
+        self.assertEqual(tensor2.shape, (1,))
         self.assertEqual(tensor2.require_grads, True)
         self.assertEqual(tensor2.grad, None)
         tensor2.backward()
@@ -87,7 +87,7 @@ class TestFunctionnal(unittest.TestCase):
         # test exp of jtensor
         tensor1 = jt.JTensors([1, 2, 3, 4])
         tensor2 = F.exp(tensor1)
-        self.assertEqual(tensor2.shape(), (4,))
+        self.assertEqual(tensor2.shape, (4,))
         self.assertEqual(tensor2.require_grads, False)
         self.assertEqual(tensor2.grad, None)
         self.assertEqual((tensor2() == np.array([np.exp(1), np.exp(2), np.exp(3), np.exp(4)])).all(), True)
@@ -95,7 +95,7 @@ class TestFunctionnal(unittest.TestCase):
         # test exp of jtensor with shape
         tensor1 = jt.JTensors([[1, 2], [3, 4]])
         tensor2 = F.exp(tensor1)
-        self.assertEqual(tensor2.shape(), (2, 2))
+        self.assertEqual(tensor2.shape, (2, 2))
         self.assertEqual(tensor2.require_grads, False)
         self.assertEqual(tensor2.grad, None)
         self.assertEqual((tensor2() == np.array([[np.exp(1), np.exp(2)], [np.exp(3), np.exp(4)]])).all(), True)
@@ -103,7 +103,7 @@ class TestFunctionnal(unittest.TestCase):
         # test exp of jtensor with shape and dtype
         tensor1 = jt.JTensors([3, 4, 6, 89, 2], require_grads=True)
         tensor2 = F.sum(F.exp(tensor1))
-        self.assertEqual(tensor2.shape(), (1,))
+        self.assertEqual(tensor2.shape, (1,))
         self.assertEqual(tensor2.require_grads, True)
         self.assertEqual(tensor2.grad, None)
         tensor2.backward()
@@ -122,20 +122,20 @@ class TestFunctionnal(unittest.TestCase):
 
         # test ones of jtensor
         tensor1 = F.ones(3, 4)
-        self.assertEqual(tensor1.shape(), (3, 4))
+        self.assertEqual(tensor1.shape, (3, 4))
         self.assertEqual(tensor1.require_grads, False)
         self.assertEqual(tensor1.grad, None)
         self.assertEqual((tensor1() == np.ones((3, 4))).all(), True)
 
         # test ones of jtensor with dtype
         tensor1 : jt.JTensors = F.ones(3, 4, requires_grad=True)
-        self.assertEqual(tensor1.shape(), (3, 4))
+        self.assertEqual(tensor1.shape, (3, 4))
         self.assertEqual(tensor1.require_grads, True)
         self.assertEqual(tensor1.grad, None)
 
         # test ones of jtensor with dtype
         tensor1 : jt.JTensors = F.ones(3, 4, requires_grad=True)
-        self.assertEqual(tensor1.shape(), (3, 4))
+        self.assertEqual(tensor1.shape, (3, 4))
         self.assertEqual(tensor1.require_grads, True)
         self.assertEqual(tensor1.grad, None)
 
@@ -149,7 +149,7 @@ class TestFunctionnal(unittest.TestCase):
         tensor1 = jt.JTensors([[1, 2], [3, 4]])
         tensor2 = jt.JTensors([[1, 2], [3, 4]])
         tensor3 = F.matmul(tensor1, tensor2)
-        self.assertEqual(tensor3.shape(), (2, 2))
+        self.assertEqual(tensor3.shape, (2, 2))
         self.assertEqual(tensor3.require_grads, False)
         self.assertEqual(tensor3.grad, None)
         self.assertEqual((tensor3() == np.matmul(np.array([[1, 2], [3, 4]]), np.array([[1, 2], [3, 4]]))).all(), True)
@@ -158,7 +158,7 @@ class TestFunctionnal(unittest.TestCase):
         tensor1 = jt.JTensors([[1, 2], [3, 4]])
         tensor2 = jt.JTensors([[1, 2, 3], [3, 4, 5]])
         tensor3 = F.matmul(tensor1, tensor2)
-        self.assertEqual(tensor3.shape(), (2, 3))
+        self.assertEqual(tensor3.shape, (2, 3))
         self.assertEqual(tensor3.require_grads, False)
         self.assertEqual(tensor3.grad, None)
         self.assertEqual((tensor3() == np.matmul(np.array([[1, 2], [3, 4]]), np.array([[1, 2, 3], [3, 4, 5]]))).all(), True)
@@ -167,7 +167,7 @@ class TestFunctionnal(unittest.TestCase):
         tensor1 = jt.JTensors([[1, 2], [3, 4]], require_grads=True)
         tensor2 = jt.JTensors([[1, 2, 4], [7, 3, 4]], require_grads=True)
         tensor3 = F.sum(F.matmul(tensor1, tensor2))
-        self.assertEqual(tensor3.shape(), (1,))
+        self.assertEqual(tensor3.shape, (1,))
         self.assertEqual(tensor3.require_grads, True)
         self.assertEqual(tensor3.grad, None)
         tensor3.backward()
@@ -190,7 +190,7 @@ class TestFunctionnal(unittest.TestCase):
         # test max of jtensor
         tensor1 : jt.JTensors = jt.JTensors([1, 2, 3, 4])
         tensor2 = F.max(tensor1, 0)
-        self.assertEqual(tensor2.shape(), (4,))
+        self.assertEqual(tensor2.shape, (4,))
         self.assertEqual(tensor2.require_grads, False)
         self.assertEqual(tensor2.grad, None)
         self.assertEqual((tensor2() == np.array([1, 2, 3, 4])).all(), True)
@@ -198,7 +198,7 @@ class TestFunctionnal(unittest.TestCase):
         # test max of jtensor with shape
         tensor1 = jt.JTensors([[1, -2], [3, 4]])
         tensor2 : jt.JTensors = F.max(tensor1, 0)
-        self.assertEqual(tensor2.shape(), (2, 2))
+        self.assertEqual(tensor2.shape, (2, 2))
         self.assertEqual(tensor2.require_grads, False)
         self.assertEqual(tensor2.grad, None)
         self.assertEqual((tensor2() == np.array([[1, 0], [3, 4]])).all(), True)
