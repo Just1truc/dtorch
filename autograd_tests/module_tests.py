@@ -6,6 +6,7 @@ import torch as t
 import numpy as np
 import dtorch.optim as optim
 import dtorch.functionnal as fn
+import dtorch.loss as ls
 
 class TestJModules(unittest.TestCase):
     
@@ -142,6 +143,89 @@ class TestJModules(unittest.TestCase):
         self.assertTrue((linear_torch.bias.grad.detach().numpy() == linear._Linear__biais.get().grad()).all(), True)
         self.assertTrue((linear_torch.weight.detach().numpy() == linear._Linear__weights.get().numpy()).all(), True)
         self.assertTrue((linear_torch.bias.detach().numpy() == linear._Linear__biais.get().numpy()).all(), True)
+
+
+    def testRNN(self):
+
+        class MyBalls(nn.Module):
+
+            def __init__(self):
+            
+                super().__init__()
+
+                self.lstm = nn.RNN(1, 1, 2, batch_first=True, bias=True)
+
+            def forward(self, x):
+
+                res, h = self.lstm(x)
+                return res, h
+
+
+        class MyTorchBalls(t.nn.Module):
+            def __init__(self):
+                super(MyTorchBalls, self).__init__()
+                self.rnn = t.nn.RNN(1, 1, 2, batch_first=True, bias=True)
+
+            def forward(self, x):
+                return self.rnn(x)
+            
+        torch_model = MyTorchBalls()
+        model = MyBalls()
+        torch_model.rnn.weight_hh_l0 = t.nn.Parameter(t.tensor([[0.5]], requires_grad=True))
+        torch_model.rnn.weight_ih_l0 = t.nn.Parameter(t.tensor([[0.5]], requires_grad=True))
+        torch_model.rnn.bias_hh_l0 = t.nn.Parameter(t.tensor([[0.5]], requires_grad=True))
+        torch_model.rnn.bias_ih_l0 = t.nn.Parameter(t.tensor([[0.5]], requires_grad=True))
+        torch_model.rnn.weight_hh_l1 = t.nn.Parameter(t.tensor([[0.5]], requires_grad=True))
+        torch_model.rnn.weight_ih_l1 = t.nn.Parameter(t.tensor([[0.5]], requires_grad=True))
+        torch_model.rnn.bias_hh_l1 = t.nn.Parameter(t.tensor([[0.5]], requires_grad=True))
+        torch_model.rnn.bias_ih_l1 = t.nn.Parameter(t.tensor([[0.5]], requires_grad=True))
+        model.lstm.weight_hh_l1 = nn.Parameter(jt.JTensors([[0.5]]))
+        model.lstm.weight_ih_l1 = nn.Parameter(jt.JTensors([[0.5]]))
+        model.lstm.bias_hh_l1 = nn.Parameter(jt.JTensors([[0.5]]))
+        model.lstm.bias_ih_l1 = nn.Parameter(jt.JTensors([[0.5]]))
+        model.lstm.weight_hh_l0 = nn.Parameter(jt.JTensors([[0.5]]), 'weight_hh_l0')
+        model.lstm.weight_ih_l0 = nn.Parameter(jt.JTensors([[0.5]]), 'weight_ih_l0')
+        model.lstm.bias_hh_l0 = nn.Parameter(jt.JTensors([[0.5]]))
+        model.lstm.bias_ih_l0 = nn.Parameter(jt.JTensors([[0.5]]))
+
+        optimizer = optim.SGD(model.parameters(), lr=0.01)
+        optimizer_torch = t.optim.SGD(torch_model.parameters(), lr=0.01)
+
+        x_train_tensor = jt.JTensors([[[1.0], [2.0], [3.0], [4.0], [5.0], [6.0]]])
+        y_train_tensor = jt.JTensors([[[2.0], [3.0], [4.0], [5.0], [6.0], [7.0]]])
+        x_torch = t.tensor([[[1.0], [2.0], [3.0], [4.0], [5.0], [6.0]]])
+        y_torch = t.tensor([[[2.0], [3.0], [4.0], [5.0], [6.0], [7.0]]])
+
+        loss = ls.MSELoss()
+        loss_torch = t.nn.MSELoss()
+
+        optimizer.zero_grad()
+        m, prout = model.forward(x_train_tensor)
+        optimizer_torch.zero_grad()
+        m_torch, prout_torch = torch_model.forward(x_torch)
+        a = loss(m, y_train_tensor)
+        a.backward()
+        a = model.lstm.weight_hh_l0.get().grad
+        b = model.lstm.weight_ih_l0.get().grad
+        optimizer.step()
+        u_torch = loss_torch(m_torch, y_torch)
+        u_torch.backward()
+        c = torch_model.rnn.weight_hh_l0.grad
+        d = torch_model.rnn.weight_ih_l0.grad
+        optimizer_torch.step()
+
+        self.assertTrue((round(float(a.detach().numpy()), 4) == round(float(c.detach().numpy()), 4)), True)
+        self.assertTrue((round(float(b.detach().numpy()), 4) == round(float(d.detach().numpy()), 4)), True)
+        self.assertTrue((round(float(model.lstm.weight_hh_l0.get().numpy()), 4) == round(float(torch_model.rnn.weight_hh_l0.detach().numpy()), 4)), True)
+        self.assertTrue((round(float(model.lstm.weight_ih_l0.get().numpy()), 4) == round(float(torch_model.rnn.weight_ih_l0.detach().numpy()), 4)), True)
+        self.assertTrue((round(float(model.lstm.bias_hh_l0.get().numpy()), 4) == round(float(torch_model.rnn.bias_hh_l0.detach().numpy()), 4)), True)
+        self.assertTrue((round(float(model.lstm.bias_ih_l0.get().numpy()), 4) == round(float(torch_model.rnn.bias_ih_l0.detach().numpy()), 4)), True)
+        self.assertTrue((round(float(model.lstm.weight_hh_l1.get().numpy()), 4) == round(float(torch_model.rnn.weight_hh_l1.detach().numpy()), 4)), True)
+        self.assertTrue((round(float(model.lstm.weight_ih_l1.get().numpy()), 4) == round(float(torch_model.rnn.weight_ih_l1.detach().numpy()), 4)), True)
+        self.assertTrue((round(float(model.lstm.bias_hh_l1.get().numpy()), 4) == round(float(torch_model.rnn.bias_hh_l1.detach().numpy()), 4)), True)
+        self.assertTrue((round(float(model.lstm.bias_ih_l1.get().numpy()), 4) == round(float(torch_model.rnn.bias_ih_l1.detach().numpy()), 4)), True)
+
+        optimizer_torch.step()
 
 
 if __name__ == "__main__":
