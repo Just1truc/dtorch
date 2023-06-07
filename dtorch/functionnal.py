@@ -262,6 +262,33 @@ def reshape(tensor : dtorch.jtensors.JTensors, shape : Tuple[int]):
 
 """ Basic tensors creation methods """
 
+def arange(start : int, end : int, step : int = 1) -> dtorch.jtensors.JTensors:
+
+    """create a tensor of values from 'start' to 'end' with a step of 'step'
+
+    Args:
+        start (int): start value
+        end (int): end value
+        step (int, optional): step between values. Defaults to 1.
+
+    Returns:
+        JTensors: the created tensor
+    """
+
+    return dtorch.jtensors.JTensors(np.arange(start, end, step))
+
+
+def tensor(list : list | np.ndarray, require_grads : bool = False) -> dtorch.jtensors.JTensors:
+
+    """create a tensor from a list or a numpy array
+
+    Args:
+        list (list | np.ndarray): the list or numpy array to create the tensor from
+    """
+
+    return dtorch.jtensors.JTensors(list, require_grads)
+
+
 def random(*shape : int) -> dtorch.jtensors.JTensors:
 
     """create a tensor of random values of shape 'shape'
