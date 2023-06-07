@@ -6,7 +6,7 @@ def rearrange_backward(base_tensor, *args):
     tensor : dtorch.jtensors.JTensors = args[0]
 
     indexes : list = args[1]
-    old_shape = tuple([base_tensor.shape()[i] for i in indexes])
+    old_shape = tuple([base_tensor.shape[i] for i in indexes])
     old_stride = tuple([base_tensor.numpy().strides[i] for i in indexes])
 
     if (tensor.require_grads):
@@ -40,10 +40,10 @@ def rearrange(tensor: dtorch.jtensors.JTensors, pattern : str):
     if len(dims) != len(res_dims):
         raise Exception("Invalid pattern")
     
-    if len(dims) != len(tensor.shape()):
+    if len(dims) != len(tensor.shape):
         raise Exception("Tensor and pattern have different dimensions")
     
-    old_shape = tensor.shape()
+    old_shape = tensor.shape
     indexes = [dims.index(i) for i in res_dims]
     shape = tuple([old_shape[i] for i in indexes])
     stride = tuple([tensor.numpy().strides[i] for i in indexes])

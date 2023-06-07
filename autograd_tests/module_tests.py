@@ -49,7 +49,7 @@ class TestJModules(unittest.TestCase):
         y = fn.sum(linear(x))
 
         # check the shape
-        self.assertEqual(y.shape(), (1,))
+        self.assertEqual(y.shape, (1,))
 
         # torch version
         linear_torch = t.nn.Linear(2, 1)
@@ -94,7 +94,7 @@ class TestJModules(unittest.TestCase):
         y_pred : t.Tensor = t.sum(linear_torch(t.tensor([[1, 2], [5, 8], [7, 3]], dtype=float, requires_grad=True)))
 
         # check the shape
-        self.assertEqual(y.shape(), (1,))
+        self.assertEqual(y.shape, (1,))
 
         y.backward()
         optimizer.step()
@@ -144,7 +144,7 @@ class TestJModules(unittest.TestCase):
         l = linear(x)
         o = relu(l)
         y = fn.sum(o)
-        self.assertEqual(y.shape(), (1,))
+        self.assertEqual(y.shape, (1,))
 
         linear_torch = t.nn.Linear(2, 1)
         linear_torch.weight = t.nn.Parameter(t.tensor([[4, 3]], requires_grad=True, dtype=float))

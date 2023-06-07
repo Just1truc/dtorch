@@ -34,7 +34,7 @@ class JTensors:
     def __call__(self):
 
         return self.__list
-    
+
 
     def __getitem__(self, key : int):
 
@@ -253,6 +253,7 @@ class JTensors:
         return self.__list
 
 
+    @property
     def shape(self) -> Tuple[int]:
         """return the shape of the tensor
 
@@ -275,6 +276,7 @@ class JTensors:
         return dtorch.functionnal.reshape(self, shape)
     
 
+    @property
     def stride(self) -> Tuple[int]:
         """return the stride of the tensor
 
