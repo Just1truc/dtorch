@@ -219,6 +219,12 @@ class Dropout(Module):
 # make adam optimizer
 # add embedding layer
 
+class Conv1d(Module):
+
+
+    def __init__(self) -> None:
+        super().__init__()
+
 
 class RNN(Module):
 

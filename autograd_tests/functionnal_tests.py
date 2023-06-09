@@ -4,6 +4,7 @@ import dtorch.functionnal as F
 import unittest
 import torch as t
 import numpy as np
+import dtorch as dt
 
 class TestFunctionnal(unittest.TestCase):
 
@@ -202,4 +203,111 @@ class TestFunctionnal(unittest.TestCase):
         self.assertEqual(tensor2.require_grads, False)
         self.assertEqual(tensor2.grad, None)
         self.assertEqual((tensor2() == np.array([[1, 0], [3, 4]])).all(), True)
+
+
+    def test_transpose(self):
+
+        """Test transpose function
+        """
+        
+        a : jt.JTensors = jt.JTensors([[1, 2, 3], [4, 5, 6]])
+        b = F.transpose(a)
+
+        self.assertEqual(b.shape, (3, 2))
+        self.assertEqual(b.require_grads, False)
+
+        a = jt.JTensors([[1, 2, 3], [4, 5, 6]])
+        b = F.transpose(a, (1, 0))
+
+        self.assertEqual(b.shape, (3, 2))
+        self.assertEqual(b.require_grads, False)
+
+        a = dt.tensor([[1, 2, 3], [4, 5, 6]], require_grads=True)
+        b = dt.sum(dt.transpose(a, (1, 0)))
+
+        torch_a = t.tensor([[1, 2, 3], [4, 5, 6]], dtype=float, requires_grad=True)
+        torch_b = t.sum(t.transpose(torch_a, 1, 0))
+
+        b.backward()
+        torch_b.backward()
+
+        self.assertEqual((a.grad.numpy() == torch_a.grad.numpy()).all(), True)
+
+
+    def test_sqrt(self):
+
+        """Test sqrt function
+        """
+
+        a = jt.JTensors([[1, 2, 3], [4, 5, 6]], require_grads=True)
+        b = F.sum(F.sqrt(a))
+
+        a_torch = t.tensor([[1, 2, 3], [4, 5, 6]], dtype=float, requires_grad=True)
+        b_torch = t.sum(t.sqrt(a_torch))
+
+        b.backward()
+        b_torch.backward()
+
+        self.assertEqual(np.array_equal(np.round(a.grad.numpy(), 4), np.round(a_torch.grad.numpy(), 4)), True)
+    
+
+    def test_square(self):
+
+        """ Test square function
+        """
+
+        a = jt.JTensors([[1, 2, 3], [4, 5, 6]], require_grads=True)
+        b = F.sum(a ** 3)
+
+        a_torch = t.tensor([[1, 2, 3], [4, 5, 6]], dtype=float, requires_grad=True)
+        b_torch = t.sum(a_torch ** 3)
+
+        b.backward()
+        b_torch.backward()
+
+        self.assertEqual(np.array_equal(a.grad.numpy(), a_torch.grad.numpy()), True)
+
+
+    def test_norm(self):
+
+        """ Test norm function
+        """
+
+        a : jt.JTensors = dt.tensor([[1, 2, 3], [4, 5, 6]], require_grads=True)
+
+        b = F.norm(a)
+
+        self.assertEqual(b.shape, (1,))
+
+        torch_a = t.tensor([[1, 2, 3], [4, 5, 6]], dtype=float, requires_grad=True)
+
+        torch_b = t.norm(torch_a)
+
+        b.backward()
+        torch_b.backward()
+
+        self.assertEqual(round(float(b()), 4) == round(float(torch_b.detach().numpy()), 4), True)
+        self.assertEqual((np.round(a.grad.numpy(), 4) == np.round(torch_a.grad.numpy(), 4)).all(), True)
+
+    
+    def test_as_strided(self):
+
+        a = dt.tensor([[1, 2, 3], [4, 5, 6]], require_grads=True)
+        b = dt.as_strided(a, (2, 2), (1, 1))
+
+        torch_a = t.tensor([[1, 2, 3], [4, 5, 6]], dtype=float, requires_grad=True)
+        torch_b = t.as_strided(torch_a, (2, 2), (1, 1))
+
+        self.assertEqual(b.shape, torch_b.shape)
+        self.assertEqual((b() == torch_b.detach().numpy()).all(), True)
+
+        b = dt.sum(b * dt.tensor([[1, 2], [3, 4]], require_grads=True))
+        torch_b = t.sum(torch_b * t.tensor([[1, 2], [3, 4]], dtype=float, requires_grad=True))
+
+        b.backward()
+        torch_b.backward()
+
+        self.assertEqual((b() == torch_b.detach().numpy()).all(), True)
+
+        self.assertEqual((a.grad.numpy() == torch_a.grad.numpy()).all(), True)
 

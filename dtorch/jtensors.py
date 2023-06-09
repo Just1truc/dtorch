@@ -1,5 +1,6 @@
 """ imports """
 from typing import Tuple, Any
+from dtorch.typing import types, DtAny
 
 import numpy as np
 
@@ -12,7 +13,7 @@ class JTensors:
 
     """ Private """
 
-    def __init__(self, array : np.ndarray | list[float], require_grads : bool = False, operation = None):
+    def __init__(self, array : np.ndarray | list[float] | float, require_grads : bool = False, operation = None):
 
         assert (isinstance(array, (np.ndarray, list, float))), "Invalid parameter for argument of jtensor"
 
@@ -237,6 +238,66 @@ class JTensors:
             
         if (self.__operation is not None):
             self.__operation.backward(base_tensor)
+
+
+    @property
+    def ndims(self) -> int:
+
+        """number of dimensions of the tensor
+
+        Returns:
+            int: the number of dims
+        """
+
+        return len(self.__list.shape)
+    
+
+    @property
+    def dtype(self) -> np.dtype:
+
+        """return the dtype of the tensor
+
+        Returns:
+            np.dtype: the dtype
+        """
+
+        return self.__list.dtype
+    
+
+    @property
+    def T(self) -> Any:
+        
+        """return the transpose of the tensor
+
+        Returns:
+            Any: the transpose
+        """
+
+        return dtorch.functionnal.transpose(self)
+
+
+    @property
+    def itemsize(self) -> int:
+
+        """return the itemsize of the tensor
+
+        Returns:
+            int: the itemsize
+        """
+
+        return self.__list.itemsize
+    
+
+    @property
+    def size(self) -> int:
+
+        """number of elements in the tensor
+
+        Returns:
+            int: the number of elements
+        """
+
+        return self.__list.size
 
 
     def isLeaf(self) -> bool:
