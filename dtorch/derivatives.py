@@ -4,6 +4,25 @@ import numpy as np
 from typing import Tuple
 
 
+def as_strided_deriv(base_tensor, *tensors):
+
+    # TODO: fix this
+
+    tensor : dtorch.jtensors.JTensors = tensors[0]
+    shape : Tuple[int] = tensors[1]
+    strides : Tuple[int] = tensors[2]
+
+    if (tensor.require_grads):
+        indexes = np.lib.stride_tricks.as_strided(np.arange(tensor().size), shape=shape, strides=strides)
+        res = np.bincount(indexes.ravel(), base_tensor().ravel())
+        res.resize(tensor.shape)
+        restrided_base_tensor = np.lib.stride_tricks.as_strided(base_tensor(), shape=tensor.shape, strides=tensor.stride)
+        if (tensor.isLeaf()):
+            tensor.grad += dtorch.jtensors.JTensors(res)
+        else:
+            tensor.grad = dtorch.jtensors.JTensors(res)
+        tensor.backward(tensor.grad, forced=True)
+
 """ Complex """
 
 def unsqueeze_backward(base_tensor, *tensors):
@@ -56,7 +75,7 @@ def sqrt_deriv(base_tensor, *tensors):
         if (tensor.isLeaf()):
             tensor.grad += dtorch.jtensors.JTensors(base_tensor() * (1 / (2 * np.sqrt(tensor()))))
         else:
-            tensor.grad = dtorch.jtensors.JTensors(base_tensor() * (1 / tensor()))
+            tensor.grad = dtorch.jtensors.JTensors(base_tensor() * (1 / (2 * np.sqrt(tensor()))))
         tensor.backward(tensor.grad, forced=True)
 
 
