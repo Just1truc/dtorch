@@ -7,7 +7,7 @@ packages = ["dtorch"]
 
 [project]
 name = "dtorch"
-version = "0.0.3"
+version = "0.0.4"
 authors = [
   { name="Just1truc", email="hyppoduc@gmail.com" },
 ]
