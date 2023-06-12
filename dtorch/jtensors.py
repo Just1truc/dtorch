@@ -1,5 +1,5 @@
 """ imports """
-from typing import Tuple, Any
+from typing import Tuple, Any, Optional
 from dtorch.typing import types, DtAny
 
 import numpy as np
@@ -13,16 +13,21 @@ class JTensors:
 
     """ Private """
 
-    def __init__(self, array : np.ndarray | list[float] | float, require_grads : bool = False, operation = None):
+    def __init__(self,
+                 array : np.ndarray | list[float] | float,
+                 require_grads : bool = False,
+                 dtype : type | np.dtype = np.float64,
+                 operation = None):
 
         assert (isinstance(array, (np.ndarray, list, float))), "Invalid parameter for argument of jtensor"
 
         if (isinstance(array, list)):
-            self.__list : np.ndarray = np.array(array)
+            self.__list : np.ndarray = np.array(array, dtype=dtype)
         elif (isinstance(array, float)):
-            self.__list : np.ndarray = np.array([array])
+            self.__list : np.ndarray = np.array([array], dtype=dtype)
         else:
             self.__list : np.ndarray = array
+            self.__list = self.__list.astype(dtype)
 
         self.__operation : dtorch.operations.Operation = None
         if (require_grads):
@@ -111,7 +116,7 @@ class JTensors:
         if (isinstance(other, JTensors)):
             res = other.__list
 
-        require_grad : bool =  self.require_grads or (isinstance(other, JTensors) and other.require_grads)
+        require_grad : bool = self.require_grads or (isinstance(other, JTensors) and other.require_grads)
 
         return JTensors(
             self.__list * res,
@@ -264,6 +269,18 @@ class JTensors:
         return self.__list.dtype
     
 
+    @dtype.setter
+    def dtype(self, dtype : np.dtype) -> None:
+
+        """set the dtype of the tensor
+
+        Args:
+            dtype (np.dtype): the dtype to set
+        """
+
+        self.__list = self.__list.astype(dtype)
+    
+
     @property
     def T(self) -> Any:
         
@@ -382,7 +399,23 @@ class JTensors:
                 self
             ) if self.require_grads else None
         )
+
+
+    def sum(self, axis : Optional[Tuple[int]] = None, keepdims : bool = False) -> Any:
+
+        return dtorch.functionnal.sum(self, axis, keepdims)
     
+
+    def rearrange(self, pattern : str) -> Any:
+
+        """rearrange the tensor
+
+        Returns:
+            Any: the rearranged tensor
+        """
+
+        return dtorch.einops.rearrange(self, pattern)
+
 
     def shuffle(self) -> Any:
 

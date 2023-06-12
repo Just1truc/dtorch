@@ -311,3 +311,139 @@ class TestFunctionnal(unittest.TestCase):
 
         self.assertEqual((a.grad.numpy() == torch_a.grad.numpy()).all(), True)
 
+
+    def test_conv1d(self):
+
+        a = dt.tensor([[[1, 2, 3, 4, 5, 6], [10, 11, 12, 13, 14, 15]]], require_grads=True)
+        b = dt.tensor([[[1, 2, 3], [6, 1, 8]]], require_grads=True)
+
+        c = dt.conv1d(a, b)
+
+        torch_a = t.tensor([[[1, 2, 3, 4, 5, 6], [10, 11, 12, 13, 14, 15]]], dtype=float, requires_grad=True)
+        torch_b = t.tensor([[[1, 2, 3], [6, 1, 8]]], dtype=float, requires_grad=True)
+
+        torch_c = t.conv1d(torch_a, torch_b)
+
+        self.assertEqual(c.shape, torch_c.shape)
+        self.assertEqual(np.array_equal(c(), torch_c.detach().numpy()), True)
+
+        c = dt.sum(c * 4)
+
+        torch_c = t.sum(torch_c * 4)
+
+        c.backward()
+        torch_c.backward()
+
+        self.assertEqual(np.array_equal(c[0], torch_c.item()), True)
+        self.assertEqual(np.array_equal(a.grad.numpy(), torch_a.grad.numpy()), True)
+
+
+    def test_conv1d_batched(self):
+
+        # batched test
+
+        a = dt.tensor([[[1, 2, 3, 4, 5, 6]], [[10, 11, 12, 13, 14, 15]]], require_grads=True)
+
+        b = dt.tensor([[[1, 4]]], require_grads=True)
+
+        c = dt.conv1d(a, b)
+
+        torch_a = t.tensor([[[1, 2, 3, 4, 5, 6]], [[10, 11, 12, 13, 14, 15]]], dtype=float, requires_grad=True)
+        torch_b = t.tensor([[[1, 4]]], dtype=float, requires_grad=True)
+        torch_c = t.conv1d(torch_a, torch_b)
+
+        #print(c, torch_c)
+        self.assertEqual(c.shape, torch_c.shape)
+        self.assertEqual(np.array_equal(c(), torch_c.detach().numpy()), True)
+
+        c = dt.sum(c * 4)
+
+        torch_c = t.sum(torch_c * 4)
+
+        c.backward()
+        torch_c.backward()
+
+        self.assertEqual(np.array_equal(c[0], torch_c.item()), True)
+        self.assertEqual(np.array_equal(a.grad.numpy(), torch_a.grad.numpy()), True)
+
+
+    def test_conv1d_batched_2(self):
+
+        # batched test 2
+
+        a = dt.tensor([[[1, 2, 3, 4, 5, 6]], [[10, 11, 12, 13, 14, 15]]], require_grads=True)
+
+        b = dt.tensor([[[1, 4]], [[1, 4]], [[1, 4]]], require_grads=True)
+
+        c = dt.conv1d(a, b)
+
+        torch_a = t.tensor([[[1, 2, 3, 4, 5, 6]], [[10, 11, 12, 13, 14, 15]]], dtype=float, requires_grad=True)
+        torch_b = t.tensor([[[1, 4]], [[1, 4]], [[1, 4]]], dtype=float, requires_grad=True)
+        torch_c = t.conv1d(torch_a, torch_b)
+
+        #print(c, torch_c)
+        self.assertEqual(c.shape, torch_c.shape)
+        self.assertEqual(np.array_equal(c(), torch_c.detach().numpy()), True)
+
+        c = dt.sum(c * 4)
+
+        torch_c = t.sum(torch_c * 4)
+
+        c.backward()
+        torch_c.backward()
+
+        self.assertEqual(np.array_equal(c[0], torch_c.item()), True)
+        self.assertEqual(np.array_equal(a.grad.numpy(), torch_a.grad.numpy()), True)
+
+
+    def test_conv2d(self):
+
+        a = dt.tensor([[[[1, 2], [3, 4], [5, 6]], [[10, 11], [12, 13], [14, 15]]]], require_grads=True)
+        b = dt.tensor([[[[1, 4], [3, 6]], [[8, 3], [3, 7]]]], require_grads=True)
+
+        c = dt.conv2d(a, b)
+
+        torch_a = t.tensor([[[[1, 2], [3, 4], [5, 6]], [[10, 11], [12, 13], [14, 15]]]], dtype=float, requires_grad=True)
+        torch_b = t.tensor([[[[1, 4], [3, 6]], [[8, 3], [3, 7]]]], dtype=float, requires_grad=True)
+
+        torch_c = t.conv2d(torch_a, torch_b)
+
+        self.assertEqual(c.shape, torch_c.shape)
+        self.assertEqual(np.array_equal(c(), torch_c.detach().numpy()), True)
+
+        c = dt.sum(c * 4)
+
+        torch_c = t.sum(torch_c * 4)
+
+        c.backward()
+        torch_c.backward()
+
+        self.assertEqual(np.array_equal(c[0], torch_c.item()), True)
+        self.assertEqual(np.array_equal(a.grad.numpy(), torch_a.grad.numpy()), True)
+
+        # batched tests
+
+        a = dt.tensor([[[[1, 2], [3, 4], [5, 6]], [[10, 11], [12, 13], [14, 15]]], [[[21, 22], [23, 24], [25, 26]], [[30, 31], [32, 33], [34, 35]]]], require_grads=True)
+        b = dt.tensor([[[[1, 4], [3, 6]], [[8, 3], [3, 7]]], [[[1, 4], [3, 6]], [[8, 3], [3, 7]]]], require_grads=True)
+
+        c = dt.conv2d(a, b)
+
+        torch_a = t.tensor([[[[1, 2], [3, 4], [5, 6]], [[10, 11], [12, 13], [14, 15]]], [[[21, 22], [23, 24], [25, 26]], [[30, 31], [32, 33], [34, 35]]]], dtype=float, requires_grad=True)
+        torch_b = t.tensor([[[[1, 4], [3, 6]], [[8, 3], [3, 7]]], [[[1, 4], [3, 6]], [[8, 3], [3, 7]]]], dtype=float, requires_grad=True)
+
+        torch_c = t.conv2d(torch_a, torch_b)
+
+        #print(c, torch_c)
+
+        self.assertEqual(c.shape, torch_c.shape)
+        self.assertEqual(np.array_equal(c(), torch_c.detach().numpy()), True)
+
+        c = dt.sum(c * 4)
+
+        torch_c = t.sum(torch_c * 4)
+
+        c.backward()
+        torch_c.backward()
+
+        self.assertEqual(np.array_equal(c[0], torch_c.item()), True)
+        self.assertEqual(np.array_equal(a.grad.numpy(), torch_a.grad.numpy()), True)
