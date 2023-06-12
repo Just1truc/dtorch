@@ -26,11 +26,11 @@ class types(object):
 
             type_list = list(self.types.values())
             for i in range(len(args)):
-                assert (type_list[i] == args[i] == None or (type_list[i] == DtAny) or (isinstance(type_list[i], DtOptional) and (args[i] is None or isinstance(args[i], type_list[i].type))) or isinstance(args[i], type_list[i])), "Invalid argument type for argument " + str(list(self.types.keys())[i])
+                assert (type_list[i] == None == args[i] or (type_list[i] == DtAny) or (isinstance(type_list[i], DtOptional) and (args[i] is None or isinstance(args[i], type_list[i].type))) or isinstance(args[i], type_list[i])), "Invalid argument type for argument " + str(list(self.types.keys())[i])
             for i in kwargs:
-                assert (self.types[i] == kwargs[i] == None or (self.types[i] == DtAny) or (isinstance(self.types[i], DtOptional) and (kwargs[i] is None or isinstance(kwargs[i], self.types[i].type))) or isinstance(kwargs[i], self.types[i])), "Invalid argument type for argument " + str(i)
+                assert (self.types[i] == None == kwargs[i] or (self.types[i] == DtAny) or (isinstance(self.types[i], DtOptional) and (kwargs[i] is None or isinstance(kwargs[i], self.types[i].type))) or isinstance(kwargs[i], self.types[i])), "Invalid argument type for argument " + str(i)
             result = fn(*args, **kwargs)
-            assert (self.return_type == result == None or (isinstance(self.return_type, DtOptional) and (result is None or isinstance(result, self.return_type.type))) or  isinstance(result, self.return_type)), "Invalid return type"
+            assert (self.return_type == None == result or (isinstance(self.return_type, DtOptional) and (result is None or isinstance(result, self.return_type.type))) or  isinstance(result, self.return_type)), "Invalid return type"
             return result
 
         return wrapper

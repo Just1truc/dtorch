@@ -20,7 +20,8 @@ from dtorch.derivatives import (
 import numpy as np
 from typing import Tuple
 from dtorch.typing import types, Optional, DtOptional
-from typing import Callable
+import math
+import dtorch as dt
 
 @types(tensor = dtorch.jtensors.JTensors, 
        axis = DtOptional(Tuple),
@@ -154,18 +155,95 @@ def as_strided(tensor : dtorch.jtensors.JTensors, shape : Tuple[int, int], strid
 
 @types(input = dtorch.jtensors.JTensors,
        weight = dtorch.jtensors.JTensors,
-       bias = dtorch.jtensors.JTensors,
-       stride = int,
-       padding = int,
-       return_typ = dtorch.jtensors.JTensors)
+       bias = DtOptional(dtorch.jtensors.JTensors),
+       stride = DtOptional(int),
+       return_type = dtorch.jtensors.JTensors)
 def conv1d(input : dtorch.jtensors.JTensors,
            weight : dtorch.jtensors.JTensors,
-           bias : dtorch.jtensors.JTensors = None,
-           stride : int = 1,
-           padding : int = 0):
+           bias : Optional[dtorch.jtensors.JTensors] = None,
+           stride : Optional[int] = 1) -> dtorch.jtensors.JTensors:
+    """convolution of a 1d tensor
 
-    """ TODO """
-    pass
+    Args:
+        input (dtorch.jtensors.JTensors): 1d tensor (batch_size, in_channel, width) or (in_channel, width)
+        weight (dtorch.jtensors.JTensors): (out_channel, in_channel, kernel_width) or (in_channel, kernel_width)
+        bias (dtorch.jtensors.JTensors, optional): (out_channel). Defaults to None.
+        stride (int, optional): *movement speed* of the kernel. Defaults to 1.
+
+    Returns:
+        dtorch.jtensors.JTensors: convolution result
+    """
+
+    # TODO : Take into account batch missing possibility
+    # TODO : Test batched, multiple channel, ect
+    # Take into account the stride also
+
+    assert (input.ndims == 2 or input.ndims == 3) and (weight.ndims == 2 or weight.ndims == 3), "input and weight must be 1d or 2d"
+    assert (bias is None) or (bias.ndims == 1), "bias must be 1d"
+    b, ic, w = input.shape
+    oc, ic_, kw = weight.shape
+    assert ic == ic_, "input and weight must have the same in_channel"
+    assert (w - kw) % stride == 0, "width of input and weight must be compatible"
+    assert (bias is None) or (oc == bias.shape[0]), "bias and weight must have the same out_channel"
+    assert (w >= kw), "width of input must be greater than width of weight"
+
+    new_w = w - (kw - 1) * stride
+    strided_input = as_strided(input, (b, 1, new_w, ic, kw), (w, 0, 1, ic * kw * stride, 1))
+
+    x : dtorch.jtensors.JTensors = strided_input * weight.unsqueeze(1)
+    x = x.sum(axis=(3, 4))
+
+    if bias is not None:
+        x = x + bias
+
+    return x
+
+
+@types(input = dtorch.jtensors.JTensors,
+       weight = dtorch.jtensors.JTensors,
+       bias = DtOptional(dtorch.jtensors.JTensors),
+       stride = DtOptional(int),
+       return_type = dtorch.jtensors.JTensors)
+def conv2d(input : dtorch.jtensors.JTensors,
+           weight : dtorch.jtensors.JTensors,
+           bias : Optional[dtorch.jtensors.JTensors] = None,
+           stride : int = 1) -> dtorch.jtensors.JTensors:
+    
+    """convolution of a 2d tensor
+
+    Args:
+        input (dtorch.jtensors.JTensors): 2d tensor (batch_size, in_channel, height, width) or (in_channel, height, width)
+        weight (dtorch.jtensors.JTensors): (out_channel, in_channel, kernel_height, kernel_width) or (in_channel, kernel_height, kernel_width)
+        bias (dtorch.jtensors.JTensors, optional): (out_channel). Defaults to None.
+        stride (int, optional): *movement speed* of the kernel. Defaults to 1.
+
+    Returns:
+        dtorch.jtensors.JTensors: convolution result
+    """
+
+    assert (input.ndims == 3 or input.ndims == 4) and (weight.ndims == 3 or weight.ndims == 4), "input and weight must be 2d or 3d"
+    assert (bias is None) or (bias.ndims == 1), "bias must be 1d"
+    if (input.ndims == 4):
+        b, ic, h, w = input.shape
+    else:
+        ic, h, w = input.shape
+    oc, ic_, kh, kw = weight.shape
+    assert ic == ic_, "input and weight must have the same in_channel"
+    assert (h - kh) % stride == 0 and (w - kw) % stride == 0, "height and width of input and weight must be compatible"
+    assert (w >= kw), "width of input must be greater or equal to the width of weight"
+
+    new_w, new_h = (w - (kw - 1) * stride, h - (kh - 1) * stride)
+    #new_shape = (b, new_h, new_w, ic, kh, kw) if input.ndims == 4 else (new_h, new_w, ic, kh, kw)
+    #new_stride = (w * h * ic, kw, 1, w * h, kw, 1) if input.ndims == 4 else (kw, 1, w * h, kw, 1)
+    new_shape = (b, 1, new_h, new_w, ic, kh, kw) if input.ndims == 4 else (1, new_h, new_w, ic, kh, kw)
+    new_stride = (w * h * ic, 1, kw, 1, w * h, kw, 1) if input.ndims == 4 else (1, kw, 1, w * h, kw, 1)
+    strided_input = as_strided(input, new_shape, new_stride)
+    #print(strided_input)
+    y = strided_input * weight.reshape(oc, 1, 1, ic, kh, kw)
+    y = y.sum(axis=(4, 5, 6))
+    if bias is not None:
+        y = y + bias.reshape(oc, 1, 1)
+    return y
 
 
 @types(tensor = dtorch.jtensors.JTensors,
@@ -273,16 +351,20 @@ def matmul(left : dtorch.jtensors.JTensors, right : dtorch.jtensors.JTensors):
 
 
 @types(tensor = dtorch.jtensors.JTensors,
-        return_type=dtorch.jtensors.JTensors)
-def sum(tensor : dtorch.jtensors.JTensors):
+       axis = DtOptional(Tuple),
+       keepdims = bool,
+       return_type=dtorch.jtensors.JTensors)
+def sum(tensor : dtorch.jtensors.JTensors, axis : Optional[Tuple[int]] = None, keepdims : bool = False):
+
+    # TODO : add tests on axis sum
 
     return dtorch.jtensors.JTensors(
-        [np.sum(tensor())],
+        np.sum(tensor(), keepdims=keepdims) if axis is None else np.sum(tensor(), axis=axis, keepdims=keepdims),
         require_grads=tensor.require_grads,
         operation=dtorch.operations.CrossOperationBackward(
             sum_deriv,
             "SumJBackward",
-            tensor
+            tensor, axis
         ) if tensor.require_grads else None
     )
 
@@ -357,8 +439,9 @@ def arange(start : int, end : int, step : int = 1) -> dtorch.jtensors.JTensors:
 
 
 @types(list = (list, np.ndarray), require_grads = bool,
+       dtype = (type, np.dtype),
         return_type=dtorch.jtensors.JTensors)
-def tensor(list : list | np.ndarray, require_grads : bool = False) -> dtorch.jtensors.JTensors:
+def tensor(list : list | np.ndarray, require_grads : bool = False, dtype : type | np.dtype = np.float64) -> dtorch.jtensors.JTensors:
 
     """create a tensor from a list or a numpy array
 
@@ -366,7 +449,7 @@ def tensor(list : list | np.ndarray, require_grads : bool = False) -> dtorch.jte
         list (list | np.ndarray): the list or numpy array to create the tensor from
     """
 
-    return dtorch.jtensors.JTensors(list, require_grads)
+    return dtorch.jtensors.JTensors(list, require_grads, dtype)
 
 
 def random(*shape : int) -> dtorch.jtensors.JTensors:
@@ -400,6 +483,19 @@ def zeros(*shape : int, requires_grad : bool = False) -> dtorch.jtensors.JTensor
     """
 
     return dtorch.jtensors.JTensors(np.zeros(shape=shape), require_grads=requires_grad)
+
+
+@types(nb_feat = int, return_type = dtorch.jtensors.JTensors, size = int, require_grads = DtOptional(bool))
+def xavier(nb_feat : int, size : int, require_grads : Optional[bool] = False) -> dtorch.jtensors.JTensors:
+
+    """xavier initialisation function
+
+    Returns:
+       JTensors : initialized tensor
+    """
+
+    stdv = 1 / math.sqrt(nb_feat)
+    return uniform_(-stdv, stdv, size, require_grads)
 
 
 @types(tensor = dtorch.jtensors.JTensors,

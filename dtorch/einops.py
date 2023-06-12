@@ -1,6 +1,7 @@
 """ imports """
 import dtorch.jtensors
 import numpy as np
+from dtorch.typing import types
 
 def rearrange_backward(base_tensor, *args):
     tensor : dtorch.jtensors.JTensors = args[0]
@@ -14,6 +15,7 @@ def rearrange_backward(base_tensor, *args):
         tensor.backward(tensor.grad, forced=True)
 
 """ no composition of axis yet """
+@types(tensor=dtorch.jtensors.JTensors, pattern=str, return_type=dtorch.jtensors.JTensors)
 def rearrange(tensor: dtorch.jtensors.JTensors, pattern : str):
 
     dims : list = []

@@ -7,6 +7,7 @@ import numpy as np
 import dtorch.optim as optim
 import dtorch.functionnal as fn
 import dtorch.loss as ls
+import dtorch as dt
 
 class MyBalls(nn.Module):
 
@@ -27,6 +28,28 @@ class MyTorchBalls(t.nn.Module):
 
     def forward(self, x):
         return self.rnn(x)
+    
+
+class MyConv1d(nn.Module):
+
+    def __init__(self):
+    
+        super().__init__()
+        self.conv = nn.Conv1d(1, 1, 2, bias=True)
+    
+    def forward(self, x):
+        return self.conv(x)
+    
+
+class MyTorchConv1d(t.nn.Module):
+
+    def __init__(self):
+    
+        super().__init__()
+        self.conv = t.nn.Conv1d(1, 1, 2, bias=True)
+    
+    def forward(self, x):
+        return self.conv(x)
 
 
 class TestJModules(unittest.TestCase):
@@ -293,6 +316,46 @@ class TestJModules(unittest.TestCase):
         self.assertEqual(round(float(model.lstm.weight_ih_l1.get().numpy()), 4), round(float(torch_model.rnn.weight_ih_l1.detach().numpy()), 4))
         self.assertEqual(round(float(model.lstm.bias_hh_l1.get().numpy()), 4), round(float(torch_model.rnn.bias_hh_l1.detach().numpy()), 4))
         self.assertEqual(round(float(model.lstm.bias_ih_l1.get().numpy()), 4), round(float(torch_model.rnn.bias_ih_l1.detach().numpy()), 4))
+
+
+    def test_conv1d(self):
+
+        model = MyConv1d()
+        torch_model = MyTorchConv1d()
+        
+        model.conv.weights = nn.Parameter(dt.tensor([[[0.5, 0.5, 0.5]]], require_grads=True))
+        model.conv.biais = nn.Parameter(dt.tensor([0.5], require_grads=True))
+
+        torch_model.conv.weight = t.nn.Parameter(t.tensor([[[0.5, 0.5, 0.5]]], requires_grad=True, dtype=t.float32))
+        torch_model.conv.bias = t.nn.Parameter(t.tensor([0.5], requires_grad=True, dtype=t.float32))
+
+        optimizer = optim.Adam(model.parameters(), lr=0.01)
+        optimizer_torch = t.optim.Adam(torch_model.parameters(), lr=0.01)
+
+        x_train_tensor = jt.JTensors([[[1.0, 2.0, 3.0, 4.0, 5.0, 6.0]]])
+        y_train_tensor = jt.JTensors([[[2.0, 3.0, 4.0, 5.0]]])
+
+        x_torch = t.tensor([[[1.0, 2.0, 3.0, 4.0, 5.0, 6.0]]])
+        y_torch = t.tensor([[[2.0, 3.0, 4.0, 5.0]]])
+
+        optimizer.zero_grad()
+        optimizer_torch.zero_grad()
+
+        loss = ls.MSELoss()
+        torch_loss = t.nn.MSELoss()
+
+        i = model(x_train_tensor)
+        j = torch_model(x_torch)
+        m = loss(i, y_train_tensor)
+        m_torch = torch_loss(j, y_torch)
+
+        self.assertEqual(round(float(m.detach().numpy()), 4), round(float(m_torch.detach().numpy()), 4))
+
+        m.backward()
+        m_torch.backward()
+
+        self.assertEqual(np.array_equal(model.conv.weights.get().grad.numpy(), torch_model.conv.weight.grad.detach().numpy()), True)
+        self.assertEqual(np.array_equal(model.conv.biais.get().grad.numpy(), torch_model.conv.bias.grad.detach().numpy()), True)
 
 
 if __name__ == "__main__":

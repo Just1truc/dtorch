@@ -1,5 +1,5 @@
 """ imports """
-from typing import Any
+from typing import Any, Optional
 import dtorch
 import functools
 from math import sqrt
@@ -11,7 +11,8 @@ class Parameter:
         
         self.__tensor : dtorch.jtensors.JTensors = tensor
         self.__tensor.require_grads = True
-        self.__tensor.add_name(name)
+        if (name != ""):
+            self.__tensor.add_name(name)
 
 
     def get(self) -> dtorch.jtensors.JTensors:
@@ -212,18 +213,44 @@ class Dropout(Module):
         return dtorch.functionnal.dropout(x, self.__p)
 
 
-# TODO :
-# look for lstm way of working till end of paper
-# implement lstm
-# save feature
-# make adam optimizer
-# add embedding layer
-
 class Conv1d(Module):
 
+    def __init__(self,
+                 in_channels : int,
+                 out_channels : int,
+                 kernel_size : int,
+                 stride : Optional[int] = 1,
+                 bias = True) -> None:
+        """ Convolution layer
 
-    def __init__(self) -> None:
+        Args:
+            in_channels (int) : input size
+            out_channels (int) : output size
+            kernel_size (int) : size of the window moving
+            stride (Optional[int]) : define the step of the window
+        """
+
         super().__init__()
+
+        assert (in_channels >= 0), "In channels is a quantity, it can't be negeative"
+        assert (out_channels >= 0), "Out channels is a quantity, it can't be negative"
+        assert (kernel_size >= 0), "Kernel size is a quantity, it can't be negative"
+        assert (stride >= 0), "Stride is a quantity, it can't be negative"
+
+        self.__stride : int = stride
+
+        """ Parameters """
+
+        self.bb : bool = bias
+        self.biais : Parameter = None
+        self.weights : Parameter = Parameter(dtorch.functionnal.xavier(kernel_size * in_channels, kernel_size * out_channels * in_channels).reshape(out_channels, in_channels, kernel_size))
+        if bias:
+            self.biais : Parameter = Parameter(dtorch.functionnal.xavier(kernel_size, out_channels))
+
+
+    def forward(self, x : dtorch.jtensors.JTensors) -> dtorch.jtensors.JTensors:
+
+        return dtorch.functionnal.conv1d(x, self.weights.get(), self.biais.get() if self.bb else None, self.__stride)
 
 
 class RNN(Module):
@@ -235,7 +262,7 @@ class RNN(Module):
                        bias : bool = True,
                        batch_first : bool = False,
                        dropout : float = 0) -> None:
-        """_summary_
+        """Reccurent neural network module
 
         Args:
             input (int): input size
