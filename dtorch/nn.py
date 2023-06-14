@@ -5,6 +5,8 @@ import functools
 from math import sqrt
 import pickle
 
+# gabriel destr
+
 class Parameter:
 
     def __init__(self, tensor : dtorch.jtensors.JTensors, name : str = "") -> None:
@@ -30,36 +32,48 @@ class Parameter:
 class Module:
 
     def __init__(self) -> None:
-        pass
+        # transform submodules into dict for serialization
+        #self._serialized_sub_modules : list = []
+        self._sub_modules : list = []
+        self._parameters : list[Parameter] = []
 
-    # transform submodules into dict for serialization
-    _serialized_sub_modules : list = []
-    _sub_modules : list = []
-    _parameters : list[Parameter] = []
-
-    __last = None
-    # count self
-    _sub : int = 0
+        #self.__last = None
+        # count self
+        #self._sub : int = 0
 
 
     """ private """
 
     def __setattr__(self, __name: str, __value: Any) -> None:
         
-        if (isinstance(__value, Module)):
-            Module._sub_modules.append(__value)
+        if (isinstance(__value, Module) and __value != self):
+            self._sub_modules.append(__value)
+
+        if (isinstance(__value, list) and len(__value) > 0 and isinstance(__value[0], Module)):
+            for module in __value:
+                self._sub_modules.append(module)
 
         if (isinstance(__value, Parameter)):
-            Module._parameters.append(__value)
-            if (Module.__last is not self):
-                if (Module.__last is not None):
-                    Module._sub += 1
-                Module.__last = self
-                Module._serialized_sub_modules.append({})
-
-            Module._serialized_sub_modules[Module._sub][__name] = __value
+            __value.get().add_name(__name)
+            self._parameters.append(__value)
+            #if (self.__last is not self):
+            #    if (self.__last is not None):
+            #        self._sub += 1
+            #    self.__last = self
+            #    self._serialized_sub_modules.append({})
+#
+            #self._serialized_sub_modules[self._sub][__name] = __value
 
         self.__dict__.__setitem__(__name, __value)
+
+
+    def __str__(self) -> str:
+        return f"{self.__class__.__name__} ({', '.join([s.__str__() for s in self._sub_modules])})"
+
+
+    def __repr__(self) -> str:
+        return self.__str__()
+
 
     """ public """
 
@@ -72,53 +86,96 @@ class Module:
 
 
     def parameters(self):
-        return self._parameters
+        res = self._parameters
+        for module in self._sub_modules:
+            res += module.parameters()
+        return res
     
 
     def eval(self) -> None:
         """set the model in eval mode. Reccursivly set require_grads of parameters to false 
         """
 
-        for parameter in Module._parameters:
+        for parameter in self._parameters:
             parameter.get().require_grads = False
-        for module in Module._sub_modules:
+        for module in self._sub_modules:
             if (hasattr(self, "_dp_rule")):
                 module._dp_rule = False
+            module.eval()
 
 
     def train(self) -> None:
         """Set model in train mode. Require grad for all parameters
         """
 
-        for parameter in Module._parameters:
+        for parameter in self._parameters:
             parameter.get().require_grads = True
-        for module in Module._sub_modules:
+        for module in self._sub_modules:
             if (hasattr(self, "_dp_rule")):
                 module._dp_rule = True
+            module.train()
+
+
+    def serialized(self) -> dict:
+
+        modules = {
+            "sub_modules" : {},
+            "params" : {}
+        }
+        i = 0
+        for module in self._sub_modules:
+            modules["sub_modules"][i] = module.serialized()
+            i += 1
+        for param in self._parameters:
+            modules["params"][param.get().get_name()] = param
+        
+        return modules
+    
+
+    def load_serialized(self, saved_data : dict):
+
+        for key, value in saved_data["sub_modules"].items():
+            self._sub_modules[key].load_serialized(value)
+        self._parameters = []
+        for key, value in saved_data["params"].items():
+            self.__setattr__(key, value)
 
     
     def save(self, path : str) -> None:
         """Save the model in the given path
         """
-        pickle.dump(self._serialized_sub_modules, open(path, "wb"))
+        # Reccursive serialization
+
+        pickle.dump(self.serialized(), open(path, "wb"))
+        
+        # pickle.dump(self._serialized_sub_modules, open(path, "wb"))
 
 
     def load(self, path : str) -> None:
         """Load the model from the given path
         """
+        # reccursivly loading
+
         try:
-            self._serialized_sub_modules = pickle.load(open(path, "rb"))
-            # clean current model
-            Module._parameters = []
-            Module._serialized_sub_modules = []
-            Module._sub = 0
-            Module.__last = None
-            # load new model
-            for id, sub_module in enumerate(self._serialized_sub_modules):
-                for name, param in sub_module.items():
-                    Module._sub_modules[id].__setattr__(name, param)
+            self.load_serialized(pickle.load(open(path, 'rb')))
         except:
             raise Exception("Save file is not compatible with current model")
+
+        #try:
+        #    self._serialized_sub_modules = pickle.load(open(path, "rb"))
+        #    # sequential saving does not work
+        #    # clean current model
+        #    Module._parameters = []
+        #    Module._serialized_sub_modules = []
+        #    Module._sub = 0
+        #    Module.__last = None
+        #    # load new model
+        #    for id, sub_module in enumerate(self._serialized_sub_modules):
+        #        for name, param in sub_module.items():
+        #            Module._sub_modules[id].__setattr__(name, param)
+        #except:
+        #    raise Exception("Save file is not compatible with current model")
+
 
 class Linear(Module):
 
@@ -132,6 +189,7 @@ class Linear(Module):
         assert (out_feats >= 0), "Out features is a quantity, it can't be negative"
 
         self.__in_feats : int = in_feats
+        self.__out_feats : int = out_feats
 
         """ Parameters """
         stdv = 1. / sqrt(in_feats)
@@ -147,6 +205,14 @@ class Linear(Module):
         return dtorch.functionnal.matmul(x, self.__weights.get().transpose()) + self.__biais.get()
 
 
+    def __str__(self) -> str:
+        return f"Linear ({self.__in_feats}, {self.__out_feats})"
+    
+
+    def __repr__(self) -> str:
+        return self.__str__()
+
+
 class Sequential(Module):
 
     def __init__(self, *modules : Module) -> None:
@@ -157,6 +223,14 @@ class Sequential(Module):
 
     def forward(self, x : dtorch.jtensors.JTensors) -> dtorch.jtensors.JTensors:
         return functools.reduce(lambda acc, layer : layer(acc), self.modules, x)
+    
+
+    def __str__(self) -> str:
+        return f"Sequential ({', '.join([module.__str__() for module in self.modules])})"
+
+
+    def __repr__(self) -> str:
+        return self.__str__()
 
 
 class SoftMax(Module):
@@ -167,6 +241,14 @@ class SoftMax(Module):
     
     def forward(self, x : dtorch.jtensors.JTensors) -> Any:
         return dtorch.functionnal.softmax(x)
+    
+
+    def __str__(self) -> str:
+        return "SoftMax"
+    
+
+    def __repr__(self) -> str:
+        return self.__str__()
 
 
 class Sigmoid(Module):
@@ -179,6 +261,14 @@ class Sigmoid(Module):
         return dtorch.functionnal.sigmoid(x)
 
 
+    def __str__(self):
+        return "Sigmoid"
+    
+
+    def __repr__(self) -> str:
+        return self.__str__()
+
+
 class ReLU(Module):
 
     def __init__(self) -> None:
@@ -189,6 +279,14 @@ class ReLU(Module):
         return dtorch.functionnal.max(x, 0)
 
 
+    def __str__(self) -> str:
+        return "ReLU"
+    
+
+    def __repr__(self) -> str:
+        return self.__str__()
+
+
 class Tanh(Module):
 
     def __init__(self) -> None:
@@ -197,6 +295,14 @@ class Tanh(Module):
 
     def forward(self, x : dtorch.jtensors.JTensors) -> Any:
         return dtorch.functionnal.tanh(x)
+    
+
+    def __str__(self) -> str:
+        return "Tanh"
+    
+
+    def __repr__(self) -> str:
+        return self.__str__()
 
 
 class Dropout(Module):
@@ -211,6 +317,14 @@ class Dropout(Module):
 
     def forward(self, x : dtorch.jtensors.JTensors) -> Any:
         return dtorch.functionnal.dropout(x, self.__p)
+    
+
+    def __str__(self) -> str:
+        return f"Dropout({self.__p})"
+    
+
+    def __repr__(self) -> str:
+        return self.__str__()
 
 
 class Conv1d(Module):
@@ -220,7 +334,7 @@ class Conv1d(Module):
                  out_channels : int,
                  kernel_size : int,
                  stride : Optional[int] = 1,
-                 bias = True) -> None:
+                 bias : bool = True) -> None:
         """ Convolution layer
 
         Args:
@@ -238,6 +352,10 @@ class Conv1d(Module):
         assert (stride >= 0), "Stride is a quantity, it can't be negative"
 
         self.__stride : int = stride
+        self.__in_c : int = in_channels
+        self.__out_c : int = out_channels
+        self.__ks : int = kernel_size
+        self.__bias : bool = bias
 
         """ Parameters """
 
@@ -251,6 +369,14 @@ class Conv1d(Module):
     def forward(self, x : dtorch.jtensors.JTensors) -> dtorch.jtensors.JTensors:
 
         return dtorch.functionnal.conv1d(x, self.weights.get(), self.biais.get() if self.bb else None, self.__stride)
+
+
+    def __str__(self) -> str:
+        return f"Conv1d (in_channel = {self.__in_c}, out_channel = {self.__out_c}, kernel_size = {self.__ks}, bias = {self.__bias})"
+    
+
+    def __repr__(self) -> str:
+        return self.__str__()
 
 
 class RNN(Module):
