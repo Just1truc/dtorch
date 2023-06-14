@@ -30,6 +30,8 @@ The package is organised in the following manner :
 | nn | a neural network layer system and its multiple layers (see doc for more details).|
 | einops | a basic reproduction of some einops library methods that support autograd |
 | optim | A library contaning the optimizers that can be used on the networks parameters. |
+| dtorchvision | A lib containing visual datasets and models (pretrained too) |
+| dtorchtext | A lib containing textual datasets and models (pretrained too) |
 
 ### About Autograd
 
