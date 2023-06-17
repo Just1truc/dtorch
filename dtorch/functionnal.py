@@ -438,9 +438,6 @@ def arange(start : int, end : int, step : int = 1) -> dtorch.jtensors.JTensors:
     return dtorch.jtensors.JTensors(np.arange(start, end, step))
 
 
-@types(list = (list, np.ndarray), require_grads = bool,
-       dtype = (type, np.dtype),
-        return_type=dtorch.jtensors.JTensors)
 def tensor(list : list | np.ndarray, require_grads : bool = False, dtype : type | np.dtype = np.float64) -> dtorch.jtensors.JTensors:
 
     """create a tensor from a list or a numpy array

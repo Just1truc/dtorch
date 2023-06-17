@@ -4,8 +4,41 @@ import dtorch
 import functools
 from math import sqrt
 import pickle
+from abc import ABC
+import os
+import requests
 
 # gabriel destr
+
+class JPretrainedModel(ABC):
+
+    def __init__(self,
+                 model_name : str,
+                 type : str,
+                 root : str = '.models') -> None:
+        """Pretrained model interface
+
+        Args:
+            model_name (str): model name
+            root (str, optional): where the model should be found. Defaults to '.models'.
+        """
+
+        self.__model_url : str = 'https://raw.githubusercontent.com/Just1truc/dtorch/main/pretrained_model/' + type + '/' + model_name + '.jt'
+        self.__model_path : str = os.path.join(root, f'{model_name}.jt')
+        self.__root : str = root
+
+        if not(os.path.isdir(root)):
+            os.makedirs(self.__root)
+        
+        if not(os.path.exists(self.__model_path)):
+            with open(self.__model_path, 'wb') as bf:
+                bf.write(requests.get(self.__model_url).content)
+
+
+    @property
+    def model_path(self):
+        return self.__model_path
+
 
 class Parameter:
 
