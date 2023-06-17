@@ -11,7 +11,7 @@ dependencies = [
   'numpy'
 ]
 name = "dtorch"
-version = "0.0.4"
+version = "0.0.5"
 authors = [
   { name="Just1truc", email="hyppoduc@gmail.com" },
 ]

@@ -1,7 +1,9 @@
 """ imports """
 import dtorch.jtensors as jtensors
 import dtorch.functionnal as fn
-from typing import Tuple
+from typing import Tuple, Union
+from abc import ABC, abstractmethod
+import os
 
 class Dataset:
 
@@ -29,4 +31,52 @@ class Dataset:
         """
 
         return (self.__train, self.__test)
+
+
+class JDataset(ABC):
+
+    def __init__(self,
+                 root : str = './data',
+                 split : Union[Tuple[str], str] = ('train', 'test'),
+                 download : bool = False) -> None: 
+        self.root : str = root
+        self.split : Union[Tuple[str], str] = split
+
+        if not self._root_exists:
+            os.makedirs(self.root)
+
+        if download and not self._dataset_exists:
+            self.download()
+        else:
+            assert (self._dataset_exists == True), "Can't find the dataset.\n You may want to download it by setting the `download` property to True."
+
+        self.load_dataset()
+
+    @property
+    def _root_exists(self) -> bool:
+        return os.path.isdir(self.root)
+
+
+    @property
+    def _dataset_exists(self) -> bool:
+        raise NotImplementedError
+    
+
+    @property
+    def data(self):
+        raise NotImplementedError
+    
+
+    """ methods """
+
+    """ public """
+
+    @abstractmethod
+    def download(self) -> None:
+        raise NotImplementedError
+
+
+    @abstractmethod
+    def load_dataset(self) -> None:
+        raise NotImplementedError
 

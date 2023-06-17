@@ -4,37 +4,7 @@ import dtorch as dt
 from abc import ABC
 import os
 import requests
-
-# PRETRAINED MODELs
-
-class JPretrainedModel(ABC):
-
-    def __init__(self,
-                 model_name : str,
-                 root : str = '.models') -> None:
-        """Pretrained model interface
-
-        Args:
-            model_name (str): model name
-            root (str, optional): where the model should be found. Defaults to '.models'.
-        """
-
-        self.__model_url : str = 'https://raw.githubusercontent.com/Just1truc/dtorch/main/pretrained_model/dtorchvision/' + model_name + '.jt'
-        self.__model_path : str = os.path.join(root, f'{model_name}.jt')
-        self.__root : str = root
-
-        if not(os.path.isdir(root)):
-            os.makedirs(self.__root)
-        
-        if not(os.path.exists(self.__model_path)):
-            with open(self.__model_path, 'wb') as bf:
-                bf.write(requests.get(self.__model_url).content)
-
-
-    @property
-    def model_path(self):
-        return self.__model_path
-
+from dtorch.nn import JPretrainedModel
 
 class MNISTAutoEncoder_128_32(JPretrainedModel):
 
@@ -45,7 +15,7 @@ class MNISTAutoEncoder_128_32(JPretrainedModel):
             root (str, optional): root of model folder. Defaults to '.models'.
         """
 
-        super().__init__('mnist_128_32', root=root)
+        super().__init__('mnist_128_32', 'dtorchvision', root=root)
 
         self.__model = AutoEncoder(784, [128, 32])
         self.__model.load(self.model_path)
