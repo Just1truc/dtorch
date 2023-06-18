@@ -3,10 +3,10 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
-<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="dtorchtree.models" href="dtorchtree_models.html" /><link rel="prev" title="dtorch.functionnal" href="functionnal.html" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="dtorch.functionnal" href="functionnal.html" /><link rel="prev" title="dtorch" href="dtorch.html" />
 
     <!-- Generated with Sphinx 6.2.1 and Furo 2023.05.20 -->
-        <title>dtorchtree - dtorch 0.0.7 documentation</title>
+        <title>dtorch.nn - dtorch 0.0.7 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?digest=e6660623a769aa55fea372102b9bf3151b292993" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
@@ -134,7 +134,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
         <div class="visually-hidden">Toggle table of contents sidebar</div>
         <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
       </label>
@@ -155,18 +155,17 @@
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul class="current">
-<li class="toctree-l1 has-children"><a class="reference internal" href="dtorch.html">dtorch</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of dtorch</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="nn.html">dtorch.nn</a></li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="dtorch.html">dtorch</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of dtorch</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">dtorch.nn</a></li>
 <li class="toctree-l2"><a class="reference internal" href="functionnal.html">dtorch.functionnal</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current has-children current-page"><a class="current reference internal" href="#">dtorchtree</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of dtorchtree</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="dtorchtree.html">dtorchtree</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of dtorchtree</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="dtorchtree_models.html">dtorchtree.models</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dtorchtree_datasets.html">dtorchtree.datasets</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="dtorchvision.html">dtorchvision</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="dtorchvision.html#dtorchtree">dtorchtree</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of dtorchtree</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l1 has-children"><a class="reference internal" href="dtorchvision.html">dtorchvision</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of dtorchvision</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="dtorchvision_models.html">dtorchvision.models</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dtorchvision_datasets.html">dtorchvision.datasets</a></li>
 </ul>
@@ -200,33 +199,14 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
             <div class="visually-hidden">Toggle table of contents sidebar</div>
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
         <article role="main">
-          <section id="dtorchtree">
-<h1>dtorchtree<a class="headerlink" href="#dtorchtree" title="Permalink to this heading">#</a></h1>
-<section id="description">
-<h2>Description<a class="headerlink" href="#description" title="Permalink to this heading">#</a></h2>
-<p>Tree type models are available in this package.
-It is possible to train a tree on specific data or just use a pretrained one.</p>
-<div class="admonition tip">
-<p class="admonition-title">Tip</p>
-<p>If you ever make a model that you are proud of, do not hesitate to send it to me via email so that I can make it disponible to everyone.</p>
-</div>
-<p>Datasets are also available here.</p>
-</section>
-<section id="modules">
-<h2>Modules<a class="headerlink" href="#modules" title="Permalink to this heading">#</a></h2>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="dtorchtree_models.html">dtorchtree.models</a></li>
-<li class="toctree-l1"><a class="reference internal" href="dtorchtree_datasets.html">dtorchtree.datasets</a></li>
-</ul>
-</div>
-</section>
+          <section id="dtorch-nn">
+<h1>dtorch.nn<a class="headerlink" href="#dtorch-nn" title="Permalink to this heading">#</a></h1>
 </section>
 
         </article>
@@ -234,23 +214,23 @@ It is possible to train a tree on specific data or just use a pretrained one.</p
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="dtorchtree_models.html">
+          <a class="next-page" href="functionnal.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">dtorchtree.models</div>
+                <div class="title">dtorch.functionnal</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="functionnal.html">
+          <a class="prev-page" href="dtorch.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">dtorch.functionnal</div>
+                <div class="title">dtorch</div>
                 
               </div>
             </a>
@@ -272,28 +252,8 @@ It is possible to train a tree on specific data or just use a pretrained one.</p
         
       </footer>
     </div>
-    <aside class="toc-drawer">
+    <aside class="toc-drawer no-toc">
       
-      
-      <div class="toc-sticky toc-scroll">
-        <div class="toc-title-container">
-          <span class="toc-title">
-            On this page
-          </span>
-        </div>
-        <div class="toc-tree-container">
-          <div class="toc-tree">
-            <ul>
-<li><a class="reference internal" href="#">dtorchtree</a><ul>
-<li><a class="reference internal" href="#description">Description</a></li>
-<li><a class="reference internal" href="#modules">Modules</a></li>
-</ul>
-</li>
-</ul>
-
-          </div>
-        </div>
-      </div>
       
       
     </aside>
