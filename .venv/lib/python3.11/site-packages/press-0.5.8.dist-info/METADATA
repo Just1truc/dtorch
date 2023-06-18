@@ -1,0 +1,20 @@
+Metadata-Version: 2.1
+Name: press
+Version: 0.5.8
+Summary: An OS image installer that supports custome partitioning, lvm, and software raid
+Home-page: http://github.com/jr0d/press
+Author: Jared Rodriguez
+Author-email: jared.rodriguez@rackspace.com
+License: GPLv2
+Platform: UNKNOWN
+Requires-Dist: pyudev
+Requires-Dist: requests
+Requires-Dist: pyyaml
+Requires-Dist: jinja2
+Requires-Dist: ipaddress
+Requires-Dist: six
+Requires-Dist: python-size
+
+UNKNOWN
+
+

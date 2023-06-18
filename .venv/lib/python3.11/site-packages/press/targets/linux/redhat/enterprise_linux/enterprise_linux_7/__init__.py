@@ -1,0 +1,1 @@
+from press.targets.linux.redhat.enterprise_linux.enterprise_linux_7 import enterprise_linux_7_target

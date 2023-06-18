@@ -1,0 +1,3 @@
+[console_scripts]
+press = press.entry:main
+
