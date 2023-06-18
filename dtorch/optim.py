@@ -38,7 +38,6 @@ class SGD(Optimizer):
 
     """ private """
 
-    @types(self = DtAny, params = list, lr=float, momentum=float, return_type=None)
     def __init__(self, params : list[Parameter] | list[OptimizerParam], lr = 1e-3, momentum : float = 0.0) -> None:
 
         assert (len(params) > 0), "List of parameters can't be empty"
@@ -96,7 +95,6 @@ class SGD(Optimizer):
 
 class AdamParam:
 
-    @types(self = DtAny, params = list[Parameter], lr = float, betas = Tuple[float, float], eps = float, weight_decay = float, return_type = None)
     def __init__(self,
                  params : list[Parameter],
                  lr : float = 0.001,

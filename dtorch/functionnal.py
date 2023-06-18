@@ -23,9 +23,6 @@ from dtorch.typing import types, Optional, DtOptional
 import math
 import dtorch as dt
 
-@types(tensor = dtorch.jtensors.JTensors, 
-       axis = DtOptional(Tuple),
-       return_type=dtorch.jtensors.JTensors)
 def transpose(tensor : dtorch.jtensors.JTensors, axis : Optional[Tuple[int, int]] = (1, 0)) -> dtorch.jtensors.JTensors:
 
     assert (len(axis) == 2 or len(axis) == tensor.shape)
@@ -41,9 +38,6 @@ def transpose(tensor : dtorch.jtensors.JTensors, axis : Optional[Tuple[int, int]
     )
 
 
-@types(tensor = dtorch.jtensors.JTensors,
-       value = (int, list),
-       return_type=dtorch.jtensors.JTensors)
 def split(tensor : dtorch.jtensors.JTensors, value : int | list[int]) -> dtorch.jtensors.JTensors:
 
     """ No backward support yet """
@@ -51,10 +45,6 @@ def split(tensor : dtorch.jtensors.JTensors, value : int | list[int]) -> dtorch.
     return dtorch.jtensors.JTensors(np.split(tensor(), value))
 
 
-@types(left = dtorch.jtensors.JTensors,
-       right = dtorch.jtensors.JTensors,
-       axis = int,
-       return_type=dtorch.jtensors.JTensors)
 def zip(left : dtorch.jtensors.JTensors, right : dtorch.jtensors.JTensors, axis : int = 0) -> dtorch.jtensors.JTensors:
 
     """ No backward support yet """
@@ -62,13 +52,9 @@ def zip(left : dtorch.jtensors.JTensors, right : dtorch.jtensors.JTensors, axis 
     return dtorch.jtensors.JTensors(np.stack((left(), right()), axis=axis))
 
 
-@types(tensor = dtorch.jtensors.JTensors,
-       return_type=dtorch.jtensors.JTensors)
 def norm(tensor : dtorch.jtensors.JTensors): return sqrt(sum(tensor ** 2))
 
 
-@types(tensor = dtorch.jtensors.JTensors,
-       return_type=dtorch.jtensors.JTensors)
 def sqrt(tensor : dtorch.jtensors.JTensors) -> dtorch.jtensors.JTensors:
 
     return dtorch.jtensors.JTensors(
@@ -82,8 +68,6 @@ def sqrt(tensor : dtorch.jtensors.JTensors) -> dtorch.jtensors.JTensors:
     )
 
 
-@types(tensor = dtorch.jtensors.JTensors,
-        return_type=dtorch.jtensors.JTensors)
 def logsumexp(tensor : dtorch.jtensors.JTensors) -> dtorch.jtensors.JTensors:
 
     max = dtorch.functionnal.max(tensor)
@@ -92,15 +76,11 @@ def logsumexp(tensor : dtorch.jtensors.JTensors) -> dtorch.jtensors.JTensors:
     return max + dtorch.functionnal.log(sumOfExp)
 
 
-@types(tensor = dtorch.jtensors.JTensors,
-         return_type=dtorch.jtensors.JTensors)
 def sigmoid(tensor : dtorch.jtensors.JTensors) -> dtorch.jtensors.JTensors:
 
     return 1 / (1 + dtorch.functionnal.exp(-1 * tensor))
 
 
-@types(data = list,
-         return_type=dtorch.jtensors.JTensors)
 def from_list(data : list[dtorch.jtensors.JTensors]) -> dtorch.jtensors.JTensors:
 
     return dtorch.jtensors.JTensors(
@@ -114,8 +94,6 @@ def from_list(data : list[dtorch.jtensors.JTensors]) -> dtorch.jtensors.JTensors
     )
 
 
-@types(tensor = dtorch.jtensors.JTensors,
-        return_type=list)
 def to_list(tensor : dtorch.jtensors.JTensors) -> list[dtorch.jtensors.JTensors]:
 
     return [dtorch.jtensors.JTensors(tensor[i], 
@@ -127,10 +105,6 @@ def to_list(tensor : dtorch.jtensors.JTensors) -> list[dtorch.jtensors.JTensors]
             )) for i in range(len(tensor))]
 
 
-@types(tensor = dtorch.jtensors.JTensors,
-       shape = Tuple,
-       strides = Tuple,
-       return_type=dtorch.jtensors.JTensors)
 def as_strided(tensor : dtorch.jtensors.JTensors, shape : Tuple[int, int], strides : Tuple[int, int]) -> dtorch.jtensors.JTensors:
 
     """change the stride of a tensor
@@ -153,11 +127,6 @@ def as_strided(tensor : dtorch.jtensors.JTensors, shape : Tuple[int, int], strid
     )
 
 
-@types(input = dtorch.jtensors.JTensors,
-       weight = dtorch.jtensors.JTensors,
-       bias = DtOptional(dtorch.jtensors.JTensors),
-       stride = DtOptional(int),
-       return_type = dtorch.jtensors.JTensors)
 def conv1d(input : dtorch.jtensors.JTensors,
            weight : dtorch.jtensors.JTensors,
            bias : Optional[dtorch.jtensors.JTensors] = None,
@@ -199,11 +168,6 @@ def conv1d(input : dtorch.jtensors.JTensors,
     return x
 
 
-@types(input = dtorch.jtensors.JTensors,
-       weight = dtorch.jtensors.JTensors,
-       bias = DtOptional(dtorch.jtensors.JTensors),
-       stride = DtOptional(int),
-       return_type = dtorch.jtensors.JTensors)
 def conv2d(input : dtorch.jtensors.JTensors,
            weight : dtorch.jtensors.JTensors,
            bias : Optional[dtorch.jtensors.JTensors] = None,
@@ -246,9 +210,6 @@ def conv2d(input : dtorch.jtensors.JTensors,
     return y
 
 
-@types(tensor = dtorch.jtensors.JTensors,
-       p = float,
-       return_type=dtorch.jtensors.JTensors)
 def dropout(tensor : dtorch.jtensors.JTensors, p : float = 0.5):
 
     mask = np.random.rand(*tensor) < p
@@ -262,9 +223,6 @@ def dropout(tensor : dtorch.jtensors.JTensors, p : float = 0.5):
         ) if tensor.require_grads else None
     )
 
-
-@types(tensor = dtorch.jtensors.JTensors,
-         return_type=dtorch.jtensors.JTensors)
 def tanh(tensor : dtorch.jtensors.JTensors):
 
     return dtorch.jtensors.JTensors(
@@ -278,17 +236,12 @@ def tanh(tensor : dtorch.jtensors.JTensors):
     )
 
 
-@types(tensor = dtorch.jtensors.JTensors,
-         return_type=dtorch.jtensors.JTensors)
 def softmax(tensor : dtorch.jtensors.JTensors):
 
     xp = exp(tensor)
     return xp / sum(xp)
 
 
-@types(tensor = dtorch.jtensors.JTensors,
-       value = int | float,
-        return_type=dtorch.jtensors.JTensors)
 def max(tensor : dtorch.jtensors.JTensors, value : int | float):
 
     return dtorch.jtensors.JTensors(
@@ -302,8 +255,6 @@ def max(tensor : dtorch.jtensors.JTensors, value : int | float):
     )
 
 
-@types(tensor = dtorch.jtensors.JTensors,
-        return_type=dtorch.jtensors.JTensors)
 def exp(tensor : dtorch.jtensors.JTensors):
 
     return dtorch.jtensors.JTensors(
@@ -317,8 +268,6 @@ def exp(tensor : dtorch.jtensors.JTensors):
     )
 
 
-@types(tensor = dtorch.jtensors.JTensors,
-        return_type=dtorch.jtensors.JTensors)
 def log(tensor : dtorch.jtensors.JTensors):
 
     return dtorch.jtensors.JTensors(
@@ -332,9 +281,6 @@ def log(tensor : dtorch.jtensors.JTensors):
     )
 
 
-@types(left = dtorch.jtensors.JTensors,
-       right = dtorch.jtensors.JTensors,
-       return_type=dtorch.jtensors.JTensors) 
 def matmul(left : dtorch.jtensors.JTensors, right : dtorch.jtensors.JTensors):
 
     require_grad : bool = (left.require_grads or right.require_grads)
@@ -350,10 +296,6 @@ def matmul(left : dtorch.jtensors.JTensors, right : dtorch.jtensors.JTensors):
     )
 
 
-@types(tensor = dtorch.jtensors.JTensors,
-       axis = DtOptional(Tuple),
-       keepdims = bool,
-       return_type=dtorch.jtensors.JTensors)
 def sum(tensor : dtorch.jtensors.JTensors, axis : Optional[Tuple[int]] = None, keepdims : bool = False):
 
     # TODO : add tests on axis sum
@@ -370,9 +312,6 @@ def sum(tensor : dtorch.jtensors.JTensors, axis : Optional[Tuple[int]] = None, k
 
 """ Squeeze & Unsqueeze """
 
-@types(tensor = dtorch.jtensors.JTensors,
-        axis = int,
-        return_type=dtorch.jtensors.JTensors)
 def squeeze(tensor : dtorch.jtensors.JTensors, axis : int):
 
     return dtorch.jtensors.JTensors(
@@ -386,9 +325,6 @@ def squeeze(tensor : dtorch.jtensors.JTensors, axis : int):
     )
 
 
-@types(tensor = dtorch.jtensors.JTensors,
-        axis = int,
-        return_type=dtorch.jtensors.JTensors)
 def unsqueeze(tensor : dtorch.jtensors.JTensors, axis : int):
 
     return dtorch.jtensors.JTensors(
@@ -402,9 +338,6 @@ def unsqueeze(tensor : dtorch.jtensors.JTensors, axis : int):
     )
 
 
-@types(tensor = dtorch.jtensors.JTensors,
-        shape = Tuple,
-        return_type=dtorch.jtensors.JTensors)
 def reshape(tensor : dtorch.jtensors.JTensors, shape : Tuple[int]):
 
     return dtorch.jtensors.JTensors(
@@ -420,8 +353,6 @@ def reshape(tensor : dtorch.jtensors.JTensors, shape : Tuple[int]):
 
 """ Basic tensors creation methods """
 
-@types(start = int, end = int, step = int,
-        return_type=dtorch.jtensors.JTensors)
 def arange(start : int, end : int, step : int = 1) -> dtorch.jtensors.JTensors:
 
     """create a tensor of values from 'start' to 'end' with a step of 'step'
@@ -482,7 +413,6 @@ def zeros(*shape : int, requires_grad : bool = False) -> dtorch.jtensors.JTensor
     return dtorch.jtensors.JTensors(np.zeros(shape=shape), require_grads=requires_grad)
 
 
-@types(nb_feat = int, return_type = dtorch.jtensors.JTensors, size = int, require_grads = DtOptional(bool))
 def xavier(nb_feat : int, size : int, require_grads : Optional[bool] = False) -> dtorch.jtensors.JTensors:
 
     """xavier initialisation function
@@ -495,8 +425,6 @@ def xavier(nb_feat : int, size : int, require_grads : Optional[bool] = False) ->
     return uniform_(-stdv, stdv, size, require_grads)
 
 
-@types(tensor = dtorch.jtensors.JTensors,
-        return_type=dtorch.jtensors.JTensors)
 def zeros_like(tensor : dtorch.jtensors.JTensors) -> dtorch.jtensors.JTensors:
     
     """create a tensors filled with '0' and the same shape as 'tensor'
@@ -508,8 +436,6 @@ def zeros_like(tensor : dtorch.jtensors.JTensors) -> dtorch.jtensors.JTensors:
     return dtorch.jtensors.JTensors(np.zeros_like(tensor()), require_grads=tensor.require_grads)
 
 
-@types(_from = float | int, _to = float | int, size = int, requires_grad = bool,
-        return_type=dtorch.jtensors.JTensors)
 def uniform_(_from : float | int, _to : float | int, size : int, require_grads : bool = False):
 
     return dtorch.jtensors.JTensors(np.random.uniform(_from, _to, size), require_grads=require_grads)

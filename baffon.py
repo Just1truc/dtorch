@@ -5,7 +5,7 @@ import dtorchvision.models
 from matplotlib import pyplot as plt
 import random
 
-#autoencoder = AutoEncoder(784, [128, 32])
+autoencoder = AutoEncoder(784, [128, 32])
 autoencoder = dtorchvision.models.MNISTAutoEncoder_128_32()
 
 i = input("Train? (y/n) ")
@@ -25,7 +25,7 @@ if (i == 'n'):
     plt.show()
     exit()
 
-autoencoder.load('model.jt')
+#autoencoder.load('model.jt')
 autoencoder.train()
 
 dataset = MNISTDataset()
