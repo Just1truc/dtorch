@@ -2,6 +2,7 @@
 # DTorch
 
 A direct link to the package : [here](https://pypi.org/project/dtorch/)
+To the Documentation : [doc](https://just1truc.github.io/dtorch/index.html)
 
 <p align="center">
 <img src="https://raw.githubusercontent.com/Just1truc/dtorch/main/.asset/2023-06-07-09%2038%2034-screenshot.png" data-canonical-src="https://raw.githubusercontent.com/Just1truc/dtorch/main/.asset/2023-06-07-09%2038%2034-screenshot.png" width="200" height="200"/></p>
@@ -32,6 +33,7 @@ The package is organised in the following manner :
 | optim | A library contaning the optimizers that can be used on the networks parameters. |
 | dtorchvision | A lib containing visual datasets and models (pretrained too) |
 | dtorchtext | A lib containing textual datasets and models (pretrained too) |
+| dtorchtree | A lib for tree ml models |
 
 ### About Autograd
 
