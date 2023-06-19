@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>dtorch.jtensors &mdash; dtorch 0.0.7 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="dtorch.nn" href="nn.html" />
+    <link rel="prev" title="dtorch" href="dtorch.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            dtorch
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="dtorch.html">dtorch</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="dtorch.html#description">Description</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="dtorch.html#modules">Modules</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">dtorch.jtensors</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#jtensors.JTensors"><code class="docutils literal notranslate"><span class="pre">JTensors</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nn.html">dtorch.nn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functionnal.html">dtorch.functionnal</a></li>
+<li class="toctree-l3"><a class="reference internal" href="einops.html">dtorch.einops</a></li>
+<li class="toctree-l3"><a class="reference internal" href="optim.html">dtorch.optim</a></li>
+<li class="toctree-l3"><a class="reference internal" href="loss.html">dtorch.loss</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="dtorchtree.html">dtorchtree</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dtorchvision.html">dtorchvision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dtorchtext.html">dtorchtext</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">dtorch</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="dtorch.html">dtorch</a></li>
+      <li class="breadcrumb-item active">dtorch.jtensors</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/jtensors.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="dtorch-jtensors">
+<h1>dtorch.jtensors<a class="headerlink" href="#dtorch-jtensors" title="Permalink to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="jtensors.JTensors">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">jtensors.</span></span><span class="sig-name descname"><span class="pre">JTensors</span></span><a class="headerlink" href="#jtensors.JTensors" title="Permalink to this definition"></a></dt>
+<dd><p>The tensor class wrapping a numpy array to handle autograd.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jtensors.JTensors.grad">
+<span class="sig-name descname"><span class="pre">grad</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#jtensors.JTensors" title="jtensors.JTensors"><span class="pre">JTensors</span></a></em><a class="headerlink" href="#jtensors.JTensors.grad" title="Permalink to this definition"></a></dt>
+<dd><p>Way to access the gradients of the tensors after the <code class="docutils literal notranslate"><span class="pre">backward()</span></code> method was called on a result of an operation on said tensors.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jtensors.JTensors.require_grads">
+<span class="sig-name descname"><span class="pre">require_grads</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><a class="headerlink" href="#jtensors.JTensors.require_grads" title="Permalink to this definition"></a></dt>
+<dd><p>If set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, the gradients of this tensor will be calculated when the <code class="docutils literal notranslate"><span class="pre">backward()</span></code> method is called.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jtensors.JTensors.ndims">
+<span class="sig-name descname"><span class="pre">ndims</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#jtensors.JTensors.ndims" title="Permalink to this definition"></a></dt>
+<dd><p>Number of dimensions this tensor’s shape have.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jtensors.JTensors.shape">
+<span class="sig-name descname"><span class="pre">shape</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#jtensors.JTensors.shape" title="Permalink to this definition"></a></dt>
+<dd><p>The shape of the tensor.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jtensors.JTensors.dtype">
+<span class="sig-name descname"><span class="pre">dtype</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">numpy.ndtype</span></em><a class="headerlink" href="#jtensors.JTensors.dtype" title="Permalink to this definition"></a></dt>
+<dd><p>The type of the tensor’s elements.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jtensors.JTensors.T">
+<span class="sig-name descname"><span class="pre">T</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#jtensors.JTensors" title="jtensors.JTensors"><span class="pre">JTensors</span></a></em><a class="headerlink" href="#jtensors.JTensors.T" title="Permalink to this definition"></a></dt>
+<dd><p>the transpose of the current tensor.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jtensors.JTensors.itemsize">
+<span class="sig-name descname"><span class="pre">itemsize</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#jtensors.JTensors.itemsize" title="Permalink to this definition"></a></dt>
+<dd><p>Size of each elements in bytes.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jtensors.JTensors.size">
+<span class="sig-name descname"><span class="pre">size</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#jtensors.JTensors.size" title="Permalink to this definition"></a></dt>
+<dd><p>Number of elements in the tensor.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="jtensors.JTensors.stride">
+<span class="sig-name descname"><span class="pre">stride</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#jtensors.JTensors.stride" title="Permalink to this definition"></a></dt>
+<dd><p>The current stride of the tensor (stride * itemsize).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jtensors.JTensors.backward">
+<span class="sig-name descname"><span class="pre">backward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">base_tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">forced</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#jtensors.JTensors.backward" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>base_tensor</strong> (<a class="reference internal" href="#jtensors.JTensors" title="jtensors.JTensors"><em>JTensors</em></a>) – The base tensor the gradients will be accumulated on top of.</p></li>
+<li><p><strong>forced</strong> (<em>bool</em>) – Only useful internaly (may be used with caution)</p></li>
+</ul>
+</dd>
+</dl>
+<p>Backpropagate though the network to calculate the gradients of tensor linked. <code class="docutils literal notranslate"><span class="pre">require_grads</span></code> attribute need to be set to True to backpropagate.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jtensors.JTensors.numpy">
+<span class="sig-name descname"><span class="pre">numpy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span></span></span><a class="headerlink" href="#jtensors.JTensors.numpy" title="Permalink to this definition"></a></dt>
+<dd><p>Transform the tensor into a numpy() array.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jtensors.JTensors.transpose">
+<span class="sig-name descname"><span class="pre">transpose</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#jtensors.JTensors" title="jtensors.JTensors"><span class="pre">JTensors</span></a></span></span><a class="headerlink" href="#jtensors.JTensors.transpose" title="Permalink to this definition"></a></dt>
+<dd><p>Transpose the tensor.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jtensors.JTensors.reshape">
+<span class="sig-name descname"><span class="pre">reshape</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">shape</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#jtensors.JTensors" title="jtensors.JTensors"><span class="pre">JTensors</span></a></span></span><a class="headerlink" href="#jtensors.JTensors.reshape" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>shape</strong> (<em>int</em>) – The shape of the new tensor. Ex : <code class="docutils literal notranslate"><span class="pre">tensor.reshape(1,</span> <span class="pre">2,</span> <span class="pre">3)</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jtensors.JTensors.max">
+<span class="sig-name descname"><span class="pre">max</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#jtensors.JTensors" title="jtensors.JTensors"><span class="pre">JTensors</span></a></span></span><a class="headerlink" href="#jtensors.JTensors.max" title="Permalink to this definition"></a></dt>
+<dd><p>Return a 1 element tensor containing the highest element of the current tensor.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jtensors.JTensors.sum">
+<span class="sig-name descname"><span class="pre">sum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keepdims</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#jtensors.JTensors" title="jtensors.JTensors"><span class="pre">JTensors</span></a></span></span><a class="headerlink" href="#jtensors.JTensors.sum" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>axis</strong> (<em>Optional</em><em>[</em><em>Tuple</em><em>[</em><em>int</em><em>]</em><em>]</em>) – The axis that will be summed. If not provided, all axis are summed.</p></li>
+<li><p><strong>keepdims</strong> (<em>bool</em>) – Keep the dimension that are summed.</p></li>
+</ul>
+</dd>
+</dl>
+<p>Return a tensor containing the sum over specific axis or over all axis if not provided.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jtensors.JTensors.rearrange">
+<span class="sig-name descname"><span class="pre">rearrange</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pattern</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#jtensors.JTensors" title="jtensors.JTensors"><span class="pre">JTensors</span></a></span></span><a class="headerlink" href="#jtensors.JTensors.rearrange" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>pattern</strong> (<em>str</em>) – The pattern to rearrange</p>
+</dd>
+</dl>
+<p>The method is similar to <code class="docutils literal notranslate"><span class="pre">einops</span></code> rearrange method.</p>
+<p>Ex:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;&gt;</span> <span class="kn">import</span> <span class="nn">dtorch.jtensors</span> <span class="k">as</span> <span class="nn">dt</span>
+<span class="o">&gt;&gt;</span> <span class="n">u</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">tensor</span><span class="p">([[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">]])</span>
+<span class="o">&gt;&gt;</span> <span class="n">dt</span><span class="o">.</span><span class="n">rearrange</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="s1">&#39;ab-&gt;ba&#39;</span><span class="p">)</span>
+<span class="n">jtensor</span><span class="p">([[</span><span class="mi">4</span> <span class="mi">5</span><span class="p">]</span> <span class="p">[</span><span class="mi">2</span> <span class="mi">2</span><span class="p">]</span> <span class="p">[</span><span class="mi">4</span> <span class="mi">6</span><span class="p">]])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jtensors.JTensors.shuffle">
+<span class="sig-name descname"><span class="pre">shuffle</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#jtensors.JTensors" title="jtensors.JTensors"><span class="pre">JTensors</span></a></span></span><a class="headerlink" href="#jtensors.JTensors.shuffle" title="Permalink to this definition"></a></dt>
+<dd><p>Return a shuffled version of the tensor. <strong>Does not support backpropagration</strong></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jtensors.JTensors.norm">
+<span class="sig-name descname"><span class="pre">norm</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#jtensors.JTensors" title="jtensors.JTensors"><span class="pre">JTensors</span></a></span></span><a class="headerlink" href="#jtensors.JTensors.norm" title="Permalink to this definition"></a></dt>
+<dd><p>Return a one element tensor containing the norm of the tensor.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jtensors.JTensors.detach">
+<span class="sig-name descname"><span class="pre">detach</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#jtensors.JTensors" title="jtensors.JTensors"><span class="pre">JTensors</span></a></span></span><a class="headerlink" href="#jtensors.JTensors.detach" title="Permalink to this definition"></a></dt>
+<dd><p>Return a copy of the tensor that is not linked to the ancient autograd graph. Useful for <em>TBPTT</em> methods</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jtensors.JTensors.clone">
+<span class="sig-name descname"><span class="pre">clone</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#jtensors.JTensors" title="jtensors.JTensors"><span class="pre">JTensors</span></a></span></span><a class="headerlink" href="#jtensors.JTensors.clone" title="Permalink to this definition"></a></dt>
+<dd><p>Return a clone of the tensor.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jtensors.JTensors.unsqueeze">
+<span class="sig-name descname"><span class="pre">unsqueeze</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#jtensors.JTensors" title="jtensors.JTensors"><span class="pre">JTensors</span></a></span></span><a class="headerlink" href="#jtensors.JTensors.unsqueeze" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dim</strong> (<em>int</em>) – Add a new dimension of size 1 at dimension index given.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="jtensors.JTensors.squeeze">
+<span class="sig-name descname"><span class="pre">squeeze</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dim</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#jtensors.JTensors" title="jtensors.JTensors"><span class="pre">JTensors</span></a></span></span><a class="headerlink" href="#jtensors.JTensors.squeeze" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dim</strong> (<em>int</em>) – The dimension to squeeze. (It must be of size 1)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="dtorch.html" class="btn btn-neutral float-left" title="dtorch" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="nn.html" class="btn btn-neutral float-right" title="dtorch.nn" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Justin Duc.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

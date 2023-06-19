@@ -1,214 +1,81 @@
-<!doctype html>
-<html class="no-js" lang="en">
-  <head><meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
-<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="dtorch" href="dtorch.html" />
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <!-- Generated with Sphinx 6.2.1 and Furo 2023.05.20 -->
-        <title>dtorch 0.0.7 documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?digest=e6660623a769aa55fea372102b9bf3151b292993" />
-    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
-    
-    
-
-
-<style>
-  body {
-    --color-code-background: #f8f8f8;
-  --color-code-foreground: black;
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Welcome to dtorch’s documentation! &mdash; dtorch 0.0.7 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
-  }
-  @media not print {
-    body[data-theme="dark"] {
-      --color-code-background: #202020;
-  --color-code-foreground: #d0d0d0;
-  
-    }
-    @media (prefers-color-scheme: dark) {
-      body:not([data-theme="light"]) {
-        --color-code-background: #202020;
-  --color-code-foreground: #d0d0d0;
-  
-      }
-    }
-  }
-</style></head>
-  <body>
-    
-    <script>
-      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
-    </script>
-    
+        <script src="_static/jquery.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="dtorch" href="dtorch.html" /> 
+</head>
 
-<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
-  <symbol id="svg-toc" viewBox="0 0 24 24">
-    <title>Contents</title>
-    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
-      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
-    </svg>
-  </symbol>
-  <symbol id="svg-menu" viewBox="0 0 24 24">
-    <title>Menu</title>
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
-      <line x1="3" y1="12" x2="21" y2="12"></line>
-      <line x1="3" y1="6" x2="21" y2="6"></line>
-      <line x1="3" y1="18" x2="21" y2="18"></line>
-    </svg>
-  </symbol>
-  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
-    <title>Expand</title>
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
-      <polyline points="9 18 15 12 9 6"></polyline>
-    </svg>
-  </symbol>
-  <symbol id="svg-sun" viewBox="0 0 24 24">
-    <title>Light mode</title>
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
-      <circle cx="12" cy="12" r="5"></circle>
-      <line x1="12" y1="1" x2="12" y2="3"></line>
-      <line x1="12" y1="21" x2="12" y2="23"></line>
-      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-      <line x1="1" y1="12" x2="3" y2="12"></line>
-      <line x1="21" y1="12" x2="23" y2="12"></line>
-      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-    </svg>
-  </symbol>
-  <symbol id="svg-moon" viewBox="0 0 24 24">
-    <title>Dark mode</title>
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
-      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
-    </svg>
-  </symbol>
-  <symbol id="svg-sun-half" viewBox="0 0 24 24">
-    <title>Auto light/dark mode</title>
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
-      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-      <circle cx="12" cy="12" r="9" />
-      <path d="M13 12h5" />
-      <path d="M13 15h4" />
-      <path d="M13 18h1" />
-      <path d="M13 9h4" />
-      <path d="M13 6h1" />
-    </svg>
-  </symbol>
-</svg>
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
 
-<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
-<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
-<label class="overlay sidebar-overlay" for="__navigation">
-  <div class="visually-hidden">Hide navigation sidebar</div>
-</label>
-<label class="overlay toc-overlay" for="__toc">
-  <div class="visually-hidden">Hide table of contents sidebar</div>
-</label>
-
-
-
-<div class="page">
-  <header class="mobile-header">
-    <div class="header-left">
-      <label class="nav-overlay-icon" for="__navigation">
-        <div class="visually-hidden">Toggle site navigation sidebar</div>
-        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
-      </label>
-    </div>
-    <div class="header-center">
-      <a href="#"><div class="brand">dtorch 0.0.7 documentation</div></a>
-    </div>
-    <div class="header-right">
-      <div class="theme-toggle-container theme-toggle-header">
-        <button class="theme-toggle">
-          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
-          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
-          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
-          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
-        </button>
-      </div>
-      <label class="toc-overlay-icon toc-header-icon" for="__toc">
-        <div class="visually-hidden">Toggle table of contents sidebar</div>
-        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
-      </label>
-    </div>
-  </header>
-  <aside class="sidebar-drawer">
-    <div class="sidebar-container">
-      
-      <div class="sidebar-sticky"><a class="sidebar-brand" href="#">
-  
-  
-  <span class="sidebar-brand-text">dtorch 0.0.7 documentation</span>
-  
-</a><form class="sidebar-search-container" method="get" action="search.html" role="search">
-  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
-  <input type="hidden" name="check_keywords" value="yes">
-  <input type="hidden" name="area" value="default">
-</form>
-<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
-  <ul>
-<li class="toctree-l1 has-children"><a class="reference internal" href="dtorch.html">dtorch</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of dtorch</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="nn.html">dtorch.nn</a></li>
-<li class="toctree-l2"><a class="reference internal" href="functionnal.html">dtorch.functionnal</a></li>
-</ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="dtorchtree.html">dtorchtree</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of dtorchtree</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="dtorchtree_models.html">dtorchtree.models</a></li>
-<li class="toctree-l2"><a class="reference internal" href="dtorchtree_datasets.html">dtorchtree.datasets</a></li>
-</ul>
-</li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="dtorchvision.html">dtorchvision</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of dtorchvision</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
-<li class="toctree-l2"><a class="reference internal" href="dtorchvision_models.html">dtorchvision.models</a></li>
-<li class="toctree-l2"><a class="reference internal" href="dtorchvision_datasets.html">dtorchvision.datasets</a></li>
-</ul>
-</li>
+          
+          
+          <a href="#" class="icon icon-home">
+            dtorch
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="dtorch.html">dtorch</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dtorchtree.html">dtorchtree</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dtorchvision.html">dtorchvision</a></li>
 <li class="toctree-l1"><a class="reference internal" href="dtorchtext.html">dtorchtext</a></li>
 </ul>
 
-</div>
-</div>
-
-      </div>
-      
-    </div>
-  </aside>
-  <div class="main">
-    <div class="content">
-      <div class="article-container">
-        <a href="#" class="back-to-top muted-link">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
-          </svg>
-          <span>Back to top</span>
-        </a>
-        <div class="content-icon-container">
-          
-<div class="theme-toggle-container theme-toggle-content">
-            <button class="theme-toggle">
-              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
-              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
-              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
-              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
-            </button>
-          </div>
-          <label class="toc-overlay-icon toc-content-icon" for="__toc">
-            <div class="visually-hidden">Toggle table of contents sidebar</div>
-            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
-          </label>
         </div>
-        <article role="main">
-          <section id="welcome-to-dtorch-s-documentation">
-<h1>Welcome to dtorch’s documentation!<a class="headerlink" href="#welcome-to-dtorch-s-documentation" title="Permalink to this heading">#</a></h1>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">dtorch</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Welcome to dtorch’s documentation!</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="welcome-to-dtorch-s-documentation">
+<h1>Welcome to dtorch’s documentation!<a class="headerlink" href="#welcome-to-dtorch-s-documentation" title="Permalink to this heading"></a></h1>
 <hr/><section id="description">
-<h2>Description<a class="headerlink" href="#description" title="Permalink to this heading">#</a></h2>
+<h2>Description<a class="headerlink" href="#description" title="Permalink to this heading"></a></h2>
 <p>DTorch is a package made by a student at Epitech to improve his understanding of <strong>pytorch</strong> and better his knowledge of ia.</p>
 <p>It is built on top of <strong>numpy</strong> which is a scientific framework for math between matrices.</p>
 <p>This project run on cpu but still have decent computation time making it usable for model building, optimization and saving/loading.
@@ -220,14 +87,153 @@ The tensors created can work with numpy but remember that the gradients will <st
 </div>
 </section>
 <section id="content">
-<h2>Content<a class="headerlink" href="#content" title="Permalink to this heading">#</a></h2>
+<h2>Content<a class="headerlink" href="#content" title="Permalink to this heading"></a></h2>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="dtorch.html">dtorch</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="dtorch.html#description">Description</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dtorch.html#modules">Modules</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="nn.html">dtorch.nn</a></li>
-<li class="toctree-l3"><a class="reference internal" href="functionnal.html">dtorch.functionnal</a></li>
+<li class="toctree-l3"><a class="reference internal" href="jtensors.html">dtorch.jtensors</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="jtensors.html#jtensors.JTensors"><code class="docutils literal notranslate"><span class="pre">JTensors</span></code></a><ul>
+<li class="toctree-l5"><a class="reference internal" href="jtensors.html#jtensors.JTensors.grad"><code class="docutils literal notranslate"><span class="pre">JTensors.grad</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="jtensors.html#jtensors.JTensors.require_grads"><code class="docutils literal notranslate"><span class="pre">JTensors.require_grads</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="jtensors.html#jtensors.JTensors.ndims"><code class="docutils literal notranslate"><span class="pre">JTensors.ndims</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="jtensors.html#jtensors.JTensors.shape"><code class="docutils literal notranslate"><span class="pre">JTensors.shape</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="jtensors.html#jtensors.JTensors.dtype"><code class="docutils literal notranslate"><span class="pre">JTensors.dtype</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="jtensors.html#jtensors.JTensors.T"><code class="docutils literal notranslate"><span class="pre">JTensors.T</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="jtensors.html#jtensors.JTensors.itemsize"><code class="docutils literal notranslate"><span class="pre">JTensors.itemsize</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="jtensors.html#jtensors.JTensors.size"><code class="docutils literal notranslate"><span class="pre">JTensors.size</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="jtensors.html#jtensors.JTensors.stride"><code class="docutils literal notranslate"><span class="pre">JTensors.stride</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="jtensors.html#jtensors.JTensors.backward"><code class="docutils literal notranslate"><span class="pre">JTensors.backward()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="jtensors.html#jtensors.JTensors.numpy"><code class="docutils literal notranslate"><span class="pre">JTensors.numpy()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="jtensors.html#jtensors.JTensors.transpose"><code class="docutils literal notranslate"><span class="pre">JTensors.transpose()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="jtensors.html#jtensors.JTensors.reshape"><code class="docutils literal notranslate"><span class="pre">JTensors.reshape()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="jtensors.html#jtensors.JTensors.max"><code class="docutils literal notranslate"><span class="pre">JTensors.max()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="jtensors.html#jtensors.JTensors.sum"><code class="docutils literal notranslate"><span class="pre">JTensors.sum()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="jtensors.html#jtensors.JTensors.rearrange"><code class="docutils literal notranslate"><span class="pre">JTensors.rearrange()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="jtensors.html#jtensors.JTensors.shuffle"><code class="docutils literal notranslate"><span class="pre">JTensors.shuffle()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="jtensors.html#jtensors.JTensors.norm"><code class="docutils literal notranslate"><span class="pre">JTensors.norm()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="jtensors.html#jtensors.JTensors.detach"><code class="docutils literal notranslate"><span class="pre">JTensors.detach()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="jtensors.html#jtensors.JTensors.clone"><code class="docutils literal notranslate"><span class="pre">JTensors.clone()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="jtensors.html#jtensors.JTensors.unsqueeze"><code class="docutils literal notranslate"><span class="pre">JTensors.unsqueeze()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="jtensors.html#jtensors.JTensors.squeeze"><code class="docutils literal notranslate"><span class="pre">JTensors.squeeze()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="nn.html">dtorch.nn</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="nn.html#description">Description</a></li>
+<li class="toctree-l4"><a class="reference internal" href="nn.html#layers">Layers</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="nn.html#Module"><code class="docutils literal notranslate"><span class="pre">Module</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="nn.html#Module.save"><code class="docutils literal notranslate"><span class="pre">Module.save()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="nn.html#Module.load"><code class="docutils literal notranslate"><span class="pre">Module.load()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="nn.html#Module.parameters"><code class="docutils literal notranslate"><span class="pre">Module.parameters()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="nn.html#Module.eval"><code class="docutils literal notranslate"><span class="pre">Module.eval()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="nn.html#Module.train"><code class="docutils literal notranslate"><span class="pre">Module.train()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="nn.html#Linear"><code class="docutils literal notranslate"><span class="pre">Linear</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="nn.html#Linear.__init__"><code class="docutils literal notranslate"><span class="pre">Linear.__init__()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="nn.html#Sequential"><code class="docutils literal notranslate"><span class="pre">Sequential</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="nn.html#Sequential.__init__"><code class="docutils literal notranslate"><span class="pre">Sequential.__init__()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="nn.html#Softmax"><code class="docutils literal notranslate"><span class="pre">Softmax</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="nn.html#Sigmoid"><code class="docutils literal notranslate"><span class="pre">Sigmoid</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="nn.html#ReLU"><code class="docutils literal notranslate"><span class="pre">ReLU</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="nn.html#Tanh"><code class="docutils literal notranslate"><span class="pre">Tanh</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="nn.html#Dropout"><code class="docutils literal notranslate"><span class="pre">Dropout</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="nn.html#Dropout.__init__"><code class="docutils literal notranslate"><span class="pre">Dropout.__init__()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="nn.html#RNN"><code class="docutils literal notranslate"><span class="pre">RNN</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="nn.html#RNN.__init__"><code class="docutils literal notranslate"><span class="pre">RNN.__init__()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="nn.html#Conv1d"><code class="docutils literal notranslate"><span class="pre">Conv1d</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="nn.html#Conv1d.__init__"><code class="docutils literal notranslate"><span class="pre">Conv1d.__init__()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="nn.html#Conv2d"><code class="docutils literal notranslate"><span class="pre">Conv2d</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="functionnal.html">dtorch.functionnal</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="functionnal.html#description">Description</a></li>
+<li class="toctree-l4"><a class="reference internal" href="functionnal.html#functions">Functions</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="functionnal.html#transpose"><code class="docutils literal notranslate"><span class="pre">transpose()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="functionnal.html#split"><code class="docutils literal notranslate"><span class="pre">split()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="functionnal.html#norm"><code class="docutils literal notranslate"><span class="pre">norm()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="functionnal.html#sqrt"><code class="docutils literal notranslate"><span class="pre">sqrt()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="functionnal.html#logsumexp"><code class="docutils literal notranslate"><span class="pre">logsumexp()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="functionnal.html#sigmoid"><code class="docutils literal notranslate"><span class="pre">sigmoid()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="functionnal.html#from_list"><code class="docutils literal notranslate"><span class="pre">from_list()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="functionnal.html#to_list"><code class="docutils literal notranslate"><span class="pre">to_list()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="functionnal.html#as_strided"><code class="docutils literal notranslate"><span class="pre">as_strided()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="functionnal.html#conv1d"><code class="docutils literal notranslate"><span class="pre">conv1d()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="functionnal.html#conv2d"><code class="docutils literal notranslate"><span class="pre">conv2d()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="functionnal.html#dropout"><code class="docutils literal notranslate"><span class="pre">dropout()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="functionnal.html#softmax"><code class="docutils literal notranslate"><span class="pre">softmax()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="functionnal.html#max"><code class="docutils literal notranslate"><span class="pre">max()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="functionnal.html#exp"><code class="docutils literal notranslate"><span class="pre">exp()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="functionnal.html#log"><code class="docutils literal notranslate"><span class="pre">log()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="functionnal.html#matmul"><code class="docutils literal notranslate"><span class="pre">matmul()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="functionnal.html#sum"><code class="docutils literal notranslate"><span class="pre">sum()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="functionnal.html#squeeze"><code class="docutils literal notranslate"><span class="pre">squeeze()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="functionnal.html#unsqueeze"><code class="docutils literal notranslate"><span class="pre">unsqueeze()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="functionnal.html#reshape"><code class="docutils literal notranslate"><span class="pre">reshape()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="functionnal.html#arange"><code class="docutils literal notranslate"><span class="pre">arange()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="functionnal.html#tensor"><code class="docutils literal notranslate"><span class="pre">tensor()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="functionnal.html#random"><code class="docutils literal notranslate"><span class="pre">random()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="functionnal.html#ones"><code class="docutils literal notranslate"><span class="pre">ones()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="functionnal.html#zeros"><code class="docutils literal notranslate"><span class="pre">zeros()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="functionnal.html#xavier"><code class="docutils literal notranslate"><span class="pre">xavier()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="functionnal.html#zeros_like"><code class="docutils literal notranslate"><span class="pre">zeros_like()</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="functionnal.html#uniform_"><code class="docutils literal notranslate"><span class="pre">uniform_()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="einops.html">dtorch.einops</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="einops.html#description">Description</a></li>
+<li class="toctree-l4"><a class="reference internal" href="einops.html#functions">Functions</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="einops.html#rearrange"><code class="docutils literal notranslate"><span class="pre">rearrange()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="optim.html">dtorch.optim</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="optim.html#description">Description</a></li>
+<li class="toctree-l4"><a class="reference internal" href="optim.html#optimizers">Optimizers</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="optim.html#Optimizer"><code class="docutils literal notranslate"><span class="pre">Optimizer</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="optim.html#Optimizer.zero_grad"><code class="docutils literal notranslate"><span class="pre">Optimizer.zero_grad()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="optim.html#Optimizer.step"><code class="docutils literal notranslate"><span class="pre">Optimizer.step()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="optim.html#SGD"><code class="docutils literal notranslate"><span class="pre">SGD</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="optim.html#SGD.__init__"><code class="docutils literal notranslate"><span class="pre">SGD.__init__()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="optim.html#Adam"><code class="docutils literal notranslate"><span class="pre">Adam</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="optim.html#Adam.__init__"><code class="docutils literal notranslate"><span class="pre">Adam.__init__()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="loss.html">dtorch.loss</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="loss.html#description">Description</a></li>
+<li class="toctree-l4"><a class="reference internal" href="loss.html#loss">Loss</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="loss.html#MSELoss"><code class="docutils literal notranslate"><span class="pre">MSELoss</span></code></a></li>
+<li class="toctree-l5"><a class="reference internal" href="loss.html#BCELoss"><code class="docutils literal notranslate"><span class="pre">BCELoss</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -235,8 +241,41 @@ The tensors created can work with numpy but remember that the gradients will <st
 <li class="toctree-l1"><a class="reference internal" href="dtorchtree.html">dtorchtree</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="dtorchtree.html#description">Description</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dtorchtree.html#modules">Modules</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="dtorchtree_models.html">dtorchtree.models</a></li>
-<li class="toctree-l3"><a class="reference internal" href="dtorchtree_datasets.html">dtorchtree.datasets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dtorchtree_models.html">dtorchtree.models</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="dtorchtree_models.html#description">Description</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dtorchtree_models.html#models">Models</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="dtorchtree_models.html#DecisionTree"><code class="docutils literal notranslate"><span class="pre">DecisionTree</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="dtorchtree_models.html#DecisionTree.__init__"><code class="docutils literal notranslate"><span class="pre">DecisionTree.__init__()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="dtorchtree_models.html#DecisionTree.fit"><code class="docutils literal notranslate"><span class="pre">DecisionTree.fit()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="dtorchtree_models.html#DecisionTree.predict"><code class="docutils literal notranslate"><span class="pre">DecisionTree.predict()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="dtorchtree_models.html#DecisionTree.save"><code class="docutils literal notranslate"><span class="pre">DecisionTree.save()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="dtorchtree_models.html#DecisionTree.load"><code class="docutils literal notranslate"><span class="pre">DecisionTree.load()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="dtorchtree_models.html#pretrained-models">Pretrained Models</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="dtorchtree_models.html#IrisDecisionTree"><code class="docutils literal notranslate"><span class="pre">IrisDecisionTree</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="dtorchtree_models.html#IrisDecisionTree.__init__"><code class="docutils literal notranslate"><span class="pre">IrisDecisionTree.__init__()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="dtorchtree_models.html#IrisDecisionTree.predict"><code class="docutils literal notranslate"><span class="pre">IrisDecisionTree.predict()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dtorchtree_datasets.html">dtorchtree.datasets</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="dtorchtree_datasets.html#description">Description</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dtorchtree_datasets.html#datasets">Datasets</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="dtorchtree_datasets.html#IrisDataset"><code class="docutils literal notranslate"><span class="pre">IrisDataset</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="dtorchtree_datasets.html#IrisDataset.__init__"><code class="docutils literal notranslate"><span class="pre">IrisDataset.__init__()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="dtorchtree_datasets.html#IrisDataset.data"><code class="docutils literal notranslate"><span class="pre">IrisDataset.data</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -244,8 +283,38 @@ The tensors created can work with numpy but remember that the gradients will <st
 <li class="toctree-l1"><a class="reference internal" href="dtorchvision.html">dtorchvision</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="dtorchvision.html#description">Description</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dtorchvision.html#modules">Modules</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="dtorchvision_models.html">dtorchvision.models</a></li>
-<li class="toctree-l3"><a class="reference internal" href="dtorchvision_datasets.html">dtorchvision.datasets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dtorchvision_models.html">dtorchvision.models</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="dtorchvision_models.html#description">Description</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dtorchvision_models.html#models">Models</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="dtorchvision_models.html#AutoEncoder"><code class="docutils literal notranslate"><span class="pre">AutoEncoder</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="dtorchvision_models.html#AutoEncoder.__init__"><code class="docutils literal notranslate"><span class="pre">AutoEncoder.__init__()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="dtorchvision_models.html#pretrained-models">Pretrained Models</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="dtorchvision_models.html#MNISTAutoEncoder_128_32"><code class="docutils literal notranslate"><span class="pre">MNISTAutoEncoder_128_32</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="dtorchvision_models.html#MNISTAutoEncoder_128_32.__init__"><code class="docutils literal notranslate"><span class="pre">MNISTAutoEncoder_128_32.__init__()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dtorchvision_datasets.html">dtorchvision.datasets</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="dtorchvision_datasets.html#description">Description</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dtorchvision_datasets.html#datasets">Datasets</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="dtorchvision_datasets.html#MNISTDataset"><code class="docutils literal notranslate"><span class="pre">MNISTDataset</span></code></a><ul>
+<li class="toctree-l6"><a class="reference internal" href="dtorchvision_datasets.html#MNISTDataset.__init__"><code class="docutils literal notranslate"><span class="pre">MNISTDataset.__init__()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="dtorchvision_datasets.html#MNISTDataset.data"><code class="docutils literal notranslate"><span class="pre">MNISTDataset.data</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="dtorchvision_datasets.html#MNISTDataset.train_data"><code class="docutils literal notranslate"><span class="pre">MNISTDataset.train_data()</span></code></a></li>
+<li class="toctree-l6"><a class="reference internal" href="dtorchvision_datasets.html#MNISTDataset.test_data"><code class="docutils literal notranslate"><span class="pre">MNISTDataset.test_data()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -256,68 +325,34 @@ The tensors created can work with numpy but remember that the gradients will <st
 </section>
 </section>
 
-        </article>
-      </div>
-      <footer>
-        
-        <div class="related-pages">
-          <a class="next-page" href="dtorch.html">
-              <div class="page-info">
-                <div class="context">
-                  <span>Next</span>
-                </div>
-                <div class="title">dtorch</div>
-              </div>
-              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
-            </a>
-          
-        </div>
-        <div class="bottom-of-page">
-          <div class="left-details">
-            <div class="copyright">
-                Copyright &#169; 2023, Justin Duc
-            </div>
-            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
-            
-            <a href="https://github.com/pradyunsg/furo">Furo</a>
-            
-          </div>
-          <div class="right-details">
-            
-          </div>
-        </div>
-        
-      </footer>
-    </div>
-    <aside class="toc-drawer">
-      
-      
-      <div class="toc-sticky toc-scroll">
-        <div class="toc-title-container">
-          <span class="toc-title">
-            On this page
-          </span>
-        </div>
-        <div class="toc-tree-container">
-          <div class="toc-tree">
-            <ul>
-<li><a class="reference internal" href="#">Welcome to dtorch’s documentation!</a><ul>
-<li><a class="reference internal" href="#description">Description</a></li>
-<li><a class="reference internal" href="#content">Content</a></li>
-</ul>
-</li>
-</ul>
 
+           </div>
           </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="dtorch.html" class="btn btn-neutral float-right" title="dtorch" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Justin Duc.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
         </div>
       </div>
-      
-      
-    </aside>
+    </section>
   </div>
-</div><script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/sphinx_highlight.js"></script>
-    <script src="_static/scripts/furo.js"></script>
-    </body>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
 </html>

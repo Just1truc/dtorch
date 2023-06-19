@@ -15,11 +15,18 @@ It offer the possibility to create tensor, have them store elements for gradient
 Modules
 -----------
 
+.. py:currentmodule::
+    dtorch
+
 Here's the list of the available modules:
 
 .. toctree::
+   jtensors
    nn
    functionnal
+   einops
+   optim
+   loss
 
 
 

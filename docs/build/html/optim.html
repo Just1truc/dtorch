@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>dtorch.optim &mdash; dtorch 0.0.7 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="dtorch.loss" href="loss.html" />
+    <link rel="prev" title="dtorch.einops" href="einops.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            dtorch
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="dtorch.html">dtorch</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="dtorch.html#description">Description</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="dtorch.html#modules">Modules</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="jtensors.html">dtorch.jtensors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="nn.html">dtorch.nn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functionnal.html">dtorch.functionnal</a></li>
+<li class="toctree-l3"><a class="reference internal" href="einops.html">dtorch.einops</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">dtorch.optim</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#description">Description</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#optimizers">Optimizers</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="loss.html">dtorch.loss</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="dtorchtree.html">dtorchtree</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dtorchvision.html">dtorchvision</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dtorchtext.html">dtorchtext</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">dtorch</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="dtorch.html">dtorch</a></li>
+      <li class="breadcrumb-item active">dtorch.optim</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/optim.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="dtorch-optim">
+<h1>dtorch.optim<a class="headerlink" href="#dtorch-optim" title="Permalink to this heading"></a></h1>
+<section id="description">
+<h2>Description<a class="headerlink" href="#description" title="Permalink to this heading"></a></h2>
+<p>This module contain optimizers for ML.
+The role of an optimizer is to apply the gradients calculated with optimization for a quicker training of the model.
+The most currently used is the <code class="docutils literal notranslate"><span class="pre">Adam</span></code> optimizer.</p>
+<p>Here’s an example of it’s usage</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">dtorch</span> <span class="kn">import</span> <span class="n">optim</span>
+
+<span class="c1"># create it by passing the model parameters to it</span>
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">optim</span><span class="o">.</span><span class="n">SGD</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">momentum</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
+
+<span class="o">...</span>
+
+<span class="c1"># during training</span>
+<span class="k">for</span> <span class="nb">input</span><span class="p">,</span> <span class="n">target</span> <span class="ow">in</span> <span class="n">dataset</span><span class="p">:</span>
+    <span class="c1"># setting all the gradients in the network to 0 or else it will accumulate</span>
+    <span class="n">optimizer</span><span class="o">.</span><span class="n">zero_grad</span><span class="p">()</span>
+
+    <span class="n">output</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span>
+    <span class="n">loss</span> <span class="o">=</span> <span class="n">loss_fn</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+    <span class="n">loss</span><span class="o">.</span><span class="n">backward</span><span class="p">()</span>
+
+    <span class="c1"># after calculating the gradient with the .backward method, calling the optimizer to apply the gradients.</span>
+    <span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">lr</span></code> parameter is the learning rate. It like a velocity for a fast the weight should be going torwards the solution.
+A high learning rate seems good at first but is usually enclined to perform poorly when the approximation need more precision.
+You may think of it as a video game character with a speed of a 1000 trying to go in a specific location.</p>
+</section>
+<section id="optimizers">
+<h2>Optimizers<a class="headerlink" href="#optimizers" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="Optimizer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Optimizer</span></span><a class="headerlink" href="#Optimizer" title="Permalink to this definition"></a></dt>
+<dd><p>The optimizer base module</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="Optimizer.zero_grad">
+<span class="sig-name descname"><span class="pre">zero_grad</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Optimizer.zero_grad" title="Permalink to this definition"></a></dt>
+<dd><p>Reinitialize gradients for parameters managed by the optimizer</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Optimizer.step">
+<span class="sig-name descname"><span class="pre">step</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Optimizer.step" title="Permalink to this definition"></a></dt>
+<dd><p>Apply gradient with optimizations provided</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="SGD">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SGD</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Optimizer</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#SGD" title="Permalink to this definition"></a></dt>
+<dd><p>An implementation of the Stochastic Gradient Descent algorithm update part with momentum if precised.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="SGD.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Parameter</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">OptimizerParam</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">momentum</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#SGD.__init__" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>params</strong> (<em>Union</em><em>[</em><em>list</em><em>[</em><em>Parameter</em><em>]</em><em>,</em><em>list</em><em>[</em><em>OptimizerParam</em><em>]</em><em>]</em>) – the parameters of a model or a list of parameters and its settings.</p></li>
+<li><p><strong>lr</strong> (<em>float</em>) – The learning rate of the optimizer</p></li>
+<li><p><strong>momentum</strong> (<em>float</em>) – the amount of velocity that should be used when applyong the weights. Between [0, 1].</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<p>With <span class="math notranslate nohighlight">\(p_i\)</span> being the parameter i, <span class="math notranslate nohighlight">\(g_i\)</span> being the gradient of the parameter i.</p>
+<p>If there is no velocity parameter:
+<span class="math notranslate nohighlight">\(p_i = p_{i-1} - lr * g_{i, t}\)</span></p>
+<p>Otherwise, with <em>v</em> being the velocity, <em>m</em> being the momentum:</p>
+<div class="line-block">
+<div class="line"><span class="math notranslate nohighlight">\(v_t = m * v_{t-1} + (1 - m) * g_{i, t}\)</span></div>
+<div class="line"><span class="math notranslate nohighlight">\(p_{i,t} = p_{i,t-1} - lr * v_t\)</span></div>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="Adam">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Adam</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Optimizer</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Adam" title="Permalink to this definition"></a></dt>
+<dd><p>Adaptive Moment Estimation is an algorithm for gradient descent that adapt the learning over time.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="Adam.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">Parameter</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">betas</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">(0.9,</span> <span class="pre">0.999)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eps</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1e-08</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weight_decay</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Adam.__init__" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>params</strong> (<em>list</em><em>[</em><em>Parameter</em><em>]</em>) – the parameters of a model or a list of parameters and its settings.</p></li>
+<li><p><strong>lr</strong> (<em>float</em>) – The learning rate of the optimizer</p></li>
+<li><p><strong>betas</strong> (<em>Tuple</em><em>[</em><em>float</em><em>]</em>) – the momentum multiplier and the learning rate speed of decrease</p></li>
+<li><p><strong>eps</strong> (<em>float</em>) – Additionnal base reduction data for the second mutliplier.</p></li>
+<li><p><strong>weight_decay</strong> (<em>float</em>) – Basicly a way to implement a Regularization multiplier (L2 type).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<p>With <span class="math notranslate nohighlight">\(p_i\)</span> being the parameter i, <span class="math notranslate nohighlight">\(g_i\)</span> being the gradient of the parameter i.</p>
+<p>If there is a weight_decay (<em>wd</em>) parameter:
+<span class="math notranslate nohighlight">\(g_i = g_i + wd * p_{i, t}\)</span></p>
+<p>Then, with <span class="math notranslate nohighlight">\(m_t, v_t\)</span> being the momentum vectors, <span class="math notranslate nohighlight">\(B_1, B_2\)</span> being the betas multipliers:</p>
+<div class="line-block">
+<div class="line"><span class="math notranslate nohighlight">\(m_t = B_1 * m_{t-1} + (1 - B_1) * g_i\)</span></div>
+<div class="line"><span class="math notranslate nohighlight">\(v_t = B_2 * v_{t-1} + (1 - B_2) * g_i^2\)</span></div>
+<div class="line"><span class="math notranslate nohighlight">\(a = m_t / (1 - B_1^t)\)</span></div>
+<div class="line"><span class="math notranslate nohighlight">\(b = v_t / (1 - B_2^t)\)</span></div>
+<div class="line"><span class="math notranslate nohighlight">\(p_{i, t} = p_{i, t-1} - lr * a / (\sqrt{b} + eps)\)</span></div>
+</div>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="einops.html" class="btn btn-neutral float-left" title="dtorch.einops" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="loss.html" class="btn btn-neutral float-right" title="dtorch.loss" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Justin Duc.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
